@@ -1,0 +1,70 @@
+@use 'tokens' as *;
+
+:root {
+  // Backgrounds
+  --color-bg-primary: #{$color-bg-primary};
+  --color-bg-secondary: #{$color-bg-secondary};
+  --color-bg-tertiary: #{$color-bg-tertiary};
+
+  // Accents
+  --color-accent-primary: #{$color-accent-primary};
+  --color-accent-muted: #{$color-accent-muted};
+
+  // Status
+  --color-status-offline: #{$color-status-offline};
+  --color-status-error: #{$color-status-error};
+  --color-status-info: #{$color-status-info};
+
+  // Typography
+  --color-text-primary: #{$color-text-primary};
+  --color-text-secondary: #{$color-text-secondary};
+  --color-text-muted: #{$color-text-muted};
+  --font-family-sans: #{$font-family-sans};
+  --font-family-mono: #{$font-family-mono};
+  
+  --text-xs: #{$text-xs};
+  --text-sm: #{$text-sm};
+  --text-base: #{$text-base};
+  --text-lg: #{$text-lg};
+  --text-xl: #{$text-xl};
+  --text-2xl: #{$text-2xl};
+  --text-display: #{$text-display};
+
+  --weight-regular: #{$weight-regular};
+  --weight-medium: #{$weight-medium};
+  --weight-semibold: #{$weight-semibold};
+  --weight-bold: #{$weight-bold};
+
+  --border-default: #{$border-default};
+}
+
+body {
+  margin: 0;
+  background-color: $color-bg-primary;
+  color: $color-text-primary;
+  font-family: $font-family-sans;
+  -webkit-font-smoothing: antialiased;
+}
+
+// Usage Note: Skeleton Screens
+.skeleton-shimmer {
+  background: linear-gradient(
+    90deg, 
+    $color-bg-secondary 25%, 
+    $color-bg-tertiary 50%, 
+    $color-bg-secondary 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+.alert-user-not-found {
+  background: transparent;
+  border: $border-default;
+  color: $color-accent-primary;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}

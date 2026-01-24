@@ -1,0 +1,40 @@
+// Backgrounds
+$color-bg-primary: #0D1117;
+$color-bg-secondary: #161B22;
+$color-bg-tertiary: #21262D;
+
+// Accents
+$color-accent-primary: #58A6FF;
+$color-accent-muted: #388BFD;
+
+// Status & Feedback
+$color-status-offline: #8B949E;
+$color-status-error: #F85149;
+$color-status-info: #1F6FEB;
+
+// Typography Colors
+$color-text-primary: #F0F6FC;
+$color-text-secondary: #8B949E;
+$color-text-muted: #484F58;
+
+// Borders
+$border-default: 1px solid #30363D;
+
+// Font Families
+$font-family-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+$font-family-mono: 'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace;
+
+// Font Sizes
+$text-xs: 0.75rem;
+$text-sm: 0.875rem;
+$text-base: 1rem;
+$text-lg: 1.125rem;
+$text-xl: 1.25rem;
+$text-2xl: 1.5rem;
+$text-display: 2rem;
+
+// Font Weights
+$weight-regular: 400;
+$weight-medium: 500;
+$weight-semibold: 600;
+$weight-bold: 700;
