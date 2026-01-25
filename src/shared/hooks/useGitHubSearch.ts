@@ -1,5 +1,6 @@
 import { useState, useCallback } from 'react';
 import { searchGitHubUser, isGitHubAPIError } from '../services/github.service';
+import { getCachedUser, cacheUser } from '../services/cache.service';
 import type { GitHubUserSearchResult } from '../types/github.types';
 
 export interface UseGitHubSearchState {
@@ -21,10 +22,17 @@ export const useGitHubSearch = (): UseGitHubSearchReturn => {
   });
 
   const search = useCallback(async (username: string): Promise<GitHubUserSearchResult> => {
+    const cached = getCachedUser(username);
+    if (cached) {
+      setState({ loading: false, error: null, data: cached });
+      return cached;
+    }
+
     setState({ loading: true, error: null, data: null });
 
     try {
       const result = await searchGitHubUser(username);
+      cacheUser(result);
       setState({ loading: false, error: null, data: result });
       return result;
     } catch (err) {

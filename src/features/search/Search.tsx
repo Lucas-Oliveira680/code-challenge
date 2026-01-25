@@ -2,7 +2,9 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { SearchBar } from "./components/Searchbar/Searchbar";
 import { UserSuggestions } from "./components/UserSuggestions/UserSuggestions";
+import { RecentSearches } from "./components/RecentSearches/RecentSearches";
 import { searchGitHubUsers } from '../../shared/services/github.service';
+import { getRecentUsers } from '../../shared/services/cache.service';
 import { Toast } from '../../shared/components/Toast/Toast';
 import type { GitHubUserSearchItem } from '../../shared/types/github.types';
 import "./Search.scss"
@@ -52,6 +54,13 @@ export const Search = () => {
                 hasSearched={hasSearched}
                 hasError={!!toastMessage || hasValidationError}
             />
+
+            {!hasSearched && (
+                <RecentSearches
+                    users={getRecentUsers()}
+                    onSelect={handleSelectUser}
+                />
+            )}
 
             {toastMessage && (
                 <Toast

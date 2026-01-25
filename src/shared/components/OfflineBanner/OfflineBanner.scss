@@ -1,0 +1,14 @@
+@use '../../styles/tokens' as *;
+
+.offline-banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.5rem 1rem;
+  background-color: rgba($color-status-error, 0.15);
+  color: $color-status-error;
+  font-size: $text-sm;
+  font-weight: $weight-medium;
+}
