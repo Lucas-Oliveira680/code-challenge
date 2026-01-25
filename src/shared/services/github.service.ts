@@ -7,7 +7,7 @@ import type {
 } from '../types/github.types';
 
 const GITHUB_API_BASE = 'https://api.github.com';
-const GITHUB_TOKEN = '';
+const GITHUB_TOKEN = import.meta.env.VITE_GITHUB_TOKEN;
 
 const getHeaders = () => ({
   'Authorization': `token ${GITHUB_TOKEN}`,
