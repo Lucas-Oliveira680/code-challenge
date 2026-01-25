@@ -4,6 +4,8 @@ import { AppRoutes } from './routes/AppRoutes'
 export function App() {
 
   return (
-    <AppRoutes />
+    <div className="app-routes">
+      <AppRoutes />
+    </div>
   )
 }

@@ -1,0 +1,69 @@
+@use '../../../../shared/styles/tokens' as *;
+
+.user-info-card {
+  background: $color-bg-secondary;
+  border: $border-default;
+  border-radius: 12px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+
+  &__header {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  &__avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 3px solid $border-default;
+    flex-shrink: 0;
+  }
+
+  &__main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  &__name {
+    font-size: 2rem;
+    font-weight: $weight-bold;
+    color: $color-text-primary;
+    margin: 0;
+  }
+
+  &__username {
+    font-size: $text-lg;
+    color: $color-text-muted;
+    margin: 0;
+  }
+
+  &__bio {
+    font-size: $text-base;
+    color: $color-text-secondary;
+    margin: 0.5rem 0 0 0;
+    line-height: 1.6;
+  }
+
+  &__stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+  }
+
+  &__stat {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: $text-base;
+    color: $color-text-secondary;
+
+    svg {
+      color: $color-text-muted;
+      flex-shrink: 0;
+    }
+  }
+}

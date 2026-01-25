@@ -1,0 +1,6 @@
+@use "./shared/styles/tokens" as *;
+
+.app-routes {
+    background-color: $color-bg-primary;
+    min-height: 100vh;
+}
