@@ -1,0 +1,78 @@
+@use '../../../../shared/styles/tokens' as *;
+
+.repo-card {
+  background: $color-bg-secondary;
+  border: $border-default;
+  border-radius: 8px;
+  padding: 1.5rem;
+  transition: all 0.2s ease;
+
+  &:hover {
+    border-color: $color-accent-primary;
+    transform: translateY(-2px);
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 0.75rem;
+  }
+
+  &__name {
+    margin: 0;
+    font-size: $text-lg;
+    font-weight: $weight-semibold;
+
+    a {
+      color: $color-accent-primary;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+
+      &:hover {
+        text-decoration: underline;
+      }
+
+      svg {
+        flex-shrink: 0;
+      }
+    }
+  }
+
+  &__stars {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    color: $color-text-muted;
+    font-size: $text-sm;
+    flex-shrink: 0;
+
+    svg {
+      color: #FFA500;
+    }
+  }
+
+  &__description {
+    color: $color-text-secondary;
+    font-size: $text-sm;
+    line-height: 1.5;
+    margin: 0 0 1rem 0;
+  }
+
+  &__footer {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  &__language {
+    font-size: $text-sm;
+    color: $color-text-muted;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+  }
+}

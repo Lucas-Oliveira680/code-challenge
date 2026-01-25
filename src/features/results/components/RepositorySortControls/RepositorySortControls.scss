@@ -1,0 +1,152 @@
+@use '../../../../shared/styles/tokens' as *;
+
+.repo-sort-controls {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+
+  &__trigger {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1rem;
+    background: $color-bg-secondary;
+    border: $border-default;
+    border-radius: 8px;
+    color: $color-text-secondary;
+    font-size: $text-sm;
+    font-weight: $weight-medium;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+
+    &:hover {
+      border-color: $color-accent-primary;
+      color: $color-text-primary;
+    }
+
+    &--active {
+      border-color: $color-accent-primary;
+      color: $color-accent-primary;
+    }
+
+    svg {
+      flex-shrink: 0;
+    }
+  }
+
+  &__badge {
+    width: 6px;
+    height: 6px;
+    background: $color-accent-primary;
+    border-radius: 50%;
+  }
+
+  &__dropdown {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    right: 0;
+    background: $color-bg-secondary;
+    border: $border-default;
+    border-radius: 8px;
+    padding: 1rem;
+    min-width: 280px;
+    z-index: 10;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+
+  &__section {
+    &:not(:last-child) {
+      margin-bottom: 1rem;
+      padding-bottom: 1rem;
+      border-bottom: $border-default;
+    }
+  }
+
+  &__label {
+    display: block;
+    font-size: $text-sm;
+    font-weight: $weight-medium;
+    color: $color-text-primary;
+    margin-bottom: 0.75rem;
+  }
+
+  &__options {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  &__option {
+    flex: 1;
+    padding: 0.5rem 0.75rem;
+    background: $color-bg-primary;
+    border: $border-default;
+    border-radius: 6px;
+    color: $color-text-secondary;
+    font-size: $text-sm;
+    font-weight: $weight-medium;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      border-color: $color-accent-primary;
+      color: $color-text-primary;
+    }
+
+    &--active {
+      background: rgba(88, 166, 255, 0.15);
+      border-color: $color-accent-primary;
+      color: $color-accent-primary;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: $border-default;
+  }
+
+  &__clear-btn {
+    flex: 1;
+    padding: 0.625rem 1rem;
+    background: transparent;
+    border: $border-default;
+    border-radius: 6px;
+    color: $color-text-secondary;
+    font-size: $text-sm;
+    font-weight: $weight-medium;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      border-color: $color-text-primary;
+      color: $color-text-primary;
+    }
+  }
+
+  &__apply-btn {
+    flex: 1;
+    padding: 0.625rem 1rem;
+    background: $color-accent-primary;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    font-size: $text-sm;
+    font-weight: $weight-medium;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover:not(:disabled) {
+      background: $color-accent-muted;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+}

@@ -1,0 +1,88 @@
+@use '../../shared/styles/tokens' as *;
+
+.results-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+
+  &__back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0;
+    margin-bottom: 1.5rem;
+    background: transparent;
+    border: none;
+    color: $color-text-secondary;
+    font-size: $text-sm;
+    font-weight: $weight-medium;
+    cursor: pointer;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: $color-accent-primary;
+    }
+
+    svg {
+      flex-shrink: 0;
+    }
+  }
+
+  &__loading {
+    text-align: center;
+    padding: 4rem 0;
+    font-size: $text-lg;
+    color: $color-text-secondary;
+  }
+
+  &__error {
+    text-align: center;
+    padding: 2rem;
+    background: $color-bg-secondary;
+    border: 1px solid $color-status-error;
+    border-radius: 8px;
+    color: $color-status-error;
+
+    button {
+      margin-top: 1rem;
+      padding: 0.75rem 1.5rem;
+      background: $color-accent-primary;
+      color: $color-text-primary;
+      border: none;
+      border-radius: 8px;
+      font-size: $text-base;
+      font-weight: $weight-medium;
+      cursor: pointer;
+      transition: all 0.2s ease;
+
+      &:hover {
+        opacity: 0.9;
+      }
+    }
+  }
+
+  &__repositories {
+    margin-top: 2rem;
+  }
+
+  &__repo-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  &__repo-title {
+    font-size: $text-xl;
+    font-weight: $weight-semibold;
+    color: $color-text-primary;
+    margin: 0;
+  }
+
+  &__repo-list {
+    display: grid;
+    gap: 1rem;
+  }
+}
