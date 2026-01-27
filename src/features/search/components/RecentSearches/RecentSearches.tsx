@@ -1,10 +1,5 @@
-import type { GitHubUserSearchResult } from '../../../../shared/types/github.types';
+import type { RecentSearchesProps } from '@features/search/types/search.types';
 import './RecentSearches.scss';
-
-interface RecentSearchesProps {
-  users: GitHubUserSearchResult[];
-  onSelect: (username: string) => void;
-}
 
 export const RecentSearches = ({ users, onSelect }: RecentSearchesProps) => {
   if (users.length === 0) return null;

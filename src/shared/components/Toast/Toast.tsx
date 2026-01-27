@@ -1,12 +1,7 @@
 import { useEffect } from 'react';
 import { X } from 'lucide-react';
+import type { ToastProps } from '@shared/types/components.types';
 import './Toast.scss';
-
-interface ToastProps {
-  message: string;
-  onClose: () => void;
-  duration?: number;
-}
 
 export const Toast = ({ message, onClose, duration = 5000 }: ToastProps) => {
   useEffect(() => {

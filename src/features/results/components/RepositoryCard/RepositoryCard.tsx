@@ -1,10 +1,6 @@
 import { Star, ExternalLink } from 'lucide-react';
-import type { GitHubRepository } from '../../../../shared/types/github.types';
+import type { RepositoryCardProps } from '@features/results/types/results.types';
 import './RepositoryCard.scss';
-
-interface RepositoryCardProps {
-  repository: GitHubRepository;
-}
 
 export const RepositoryCard = ({ repository }: RepositoryCardProps) => {
   return (

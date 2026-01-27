@@ -1,11 +1,6 @@
 import { Users, Star } from 'lucide-react';
-import type { GitHubUserSearchItem } from '../../../../shared/types/github.types';
+import type { UserCardProps } from '@features/search/types/search.types';
 import './UserCard.scss';
-
-interface UserCardProps {
-  user: GitHubUserSearchItem;
-  onClick?: () => void;
-}
 
 export const UserCard = ({ user, onClick }: UserCardProps) => {
   return (

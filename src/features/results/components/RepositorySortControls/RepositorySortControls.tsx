@@ -1,12 +1,7 @@
 import { useState } from 'react';
 import { SlidersHorizontal } from 'lucide-react';
+import type { SortOption, RepositorySortControlsProps } from '@features/results/types/results.types';
 import './RepositorySortControls.scss';
-
-export type SortOption = 'name-asc' | 'name-desc' | 'stars-asc' | 'stars-desc' | null;
-
-interface RepositorySortControlsProps {
-  onSortChange: (nameSort: SortOption, starsSort: SortOption) => void;
-}
 
 export const RepositorySortControls = ({ onSortChange }: RepositorySortControlsProps) => {
   const [isOpen, setIsOpen] = useState(false);

@@ -1,15 +1,9 @@
 import { useState } from 'react';
 import type { FormEvent, ChangeEvent } from 'react';
 import { Search, ArrowRight } from 'lucide-react';
-import { validateSearchQuery } from '../../../../shared/utils/validation';
+import { validateSearchQuery } from '@shared/utils/validation';
+import type { SearchbarProps } from '@features/search/types/search.types';
 import './Searchbar.scss';
-
-interface SearchbarProps {
-  onSearch: (query: string) => void;
-  onValidationError?: () => void;
-  isLoading?: boolean;
-  isExpanded?: boolean;
-}
 
 export const SearchBar = ({ onSearch, onValidationError, isLoading = false, isExpanded = false }: SearchbarProps) => {
   const [query, setQuery] = useState('');

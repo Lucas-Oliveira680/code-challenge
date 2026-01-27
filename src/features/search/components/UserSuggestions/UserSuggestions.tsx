@@ -1,12 +1,5 @@
-import type { GitHubUserSearchItem } from '../../../../shared/types/github.types';
+import type { UserSuggestionsProps } from '@features/search/types/search.types';
 import './UserSuggestions.scss';
-
-interface UserSuggestionsProps {
-  users: GitHubUserSearchItem[];
-  onSelect: (username: string) => void;
-  hasSearched: boolean;
-  hasError?: boolean;
-}
 
 export const UserSuggestions = ({ users, onSelect, hasSearched, hasError }: UserSuggestionsProps) => {
   if (!hasSearched || hasError) return null;

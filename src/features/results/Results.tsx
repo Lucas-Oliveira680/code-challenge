@@ -1,11 +1,12 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
-import { useGitHubSearch } from '../../shared/hooks/useGitHubSearch';
+import { useGitHubSearch } from '@shared/hooks/useGitHubSearch';
 import { UserInfoCard } from './components/UserInfoCard/UserInfoCard';
 import { RepositoryCard } from './components/RepositoryCard/RepositoryCard';
-import { RepositorySortControls, type SortOption } from './components/RepositorySortControls/RepositorySortControls';
-import type { GitHubRepository } from '../../shared/types/github.types';
+import { RepositorySortControls } from './components/RepositorySortControls/RepositorySortControls';
+import type { SortOption } from '@features/results/types/results.types';
+import type { GitHubRepository } from '@shared/types/github.types';
 import './Results.scss';
 
 export const Results = () => {

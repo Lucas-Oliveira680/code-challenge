@@ -1,10 +1,6 @@
 import { MapPin, Users, Star } from 'lucide-react';
-import type { GitHubUserDetails } from '../../../../shared/types/github.types';
+import type { UserInfoCardProps } from '@features/results/types/results.types';
 import './UserInfoCard.scss';
-
-interface UserInfoCardProps {
-  user: GitHubUserDetails;
-}
 
 export const UserInfoCard = ({ user }: UserInfoCardProps) => {
   return (
