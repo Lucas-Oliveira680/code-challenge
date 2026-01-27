@@ -27,6 +27,23 @@ export interface GitHubRepository {
   html_url: string;
   language: string | null;
   updated_at: string;
+  owner: {
+    login: string;
+  };
+}
+
+export interface GitHubRepositoryDetails extends GitHubRepository {
+  full_name: string;
+  owner: {
+    login: string;
+    avatar_url: string;
+  };
+  forks_count: number;
+  watchers_count: number;
+  default_branch: string;
+  created_at: string;
+  topics: string[];
+  homepage: string | null;
 }
 
 export interface GitHubSearchResult {

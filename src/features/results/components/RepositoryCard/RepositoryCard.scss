@@ -6,6 +6,7 @@
   border-radius: 8px;
   padding: 1.5rem;
   transition: all 0.2s ease;
+  cursor: pointer;
 
   &:hover {
     border-color: $color-accent-primary;
@@ -24,22 +25,7 @@
     margin: 0;
     font-size: $text-lg;
     font-weight: $weight-semibold;
-
-    a {
-      color: $color-accent-primary;
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-
-      &:hover {
-        text-decoration: underline;
-      }
-
-      svg {
-        flex-shrink: 0;
-      }
-    }
+    color: $color-accent-primary;
   }
 
   &__stars {

@@ -2,6 +2,7 @@ import type {
   GitHubUserSearchItem,
   GitHubUserDetails,
   GitHubRepository,
+  GitHubRepositoryDetails,
   GitHubSearchResult,
   GitHubUserSearchResult
 } from '../types/github.types';
@@ -136,4 +137,23 @@ export const searchGitHubUser = async (username: string): Promise<GitHubUserSear
     username,
     hasMoreRepos: reposResult.hasMore
   };
+};
+
+export const fetchRepositoryDetails = async (owner: string, repo: string): Promise<GitHubRepositoryDetails> => {
+  const response = await fetch(
+    `${GITHUB_API_BASE}/repos/${owner}/${repo}`,
+    { headers: getHeaders() }
+  );
+
+  if (!response.ok) {
+    if (response.status === 404) {
+      throw createAPIError(404, 'Repository not found');
+    }
+    if (response.status === 403) {
+      throw createAPIError(403, 'GitHub API rate limit exceeded');
+    }
+    throw createAPIError(response.status, 'Failed to fetch repository details');
+  }
+
+  return response.json();
 };

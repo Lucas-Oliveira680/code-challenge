@@ -1,0 +1,223 @@
+@use '@shared/styles/tokens' as *;
+
+.repo-details {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem;
+
+  &__back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0;
+    margin-bottom: 1.5rem;
+    background: transparent;
+    border: none;
+    color: $color-text-secondary;
+    font-size: $text-sm;
+    font-weight: $weight-medium;
+    cursor: pointer;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: $color-accent-primary;
+    }
+  }
+
+  &__loading {
+    text-align: center;
+    padding: 4rem 0;
+    font-size: $text-lg;
+    color: $color-text-secondary;
+  }
+
+  &__error {
+    text-align: center;
+    padding: 2rem;
+    background: $color-bg-secondary;
+    border: 1px solid $color-status-error;
+    border-radius: 8px;
+    color: $color-status-error;
+
+    button {
+      margin-top: 1rem;
+      padding: 0.75rem 1.5rem;
+      background: $color-accent-primary;
+      color: $color-text-primary;
+      border: none;
+      border-radius: 8px;
+      font-size: $text-base;
+      font-weight: $weight-medium;
+      cursor: pointer;
+      transition: all 0.2s ease;
+
+      &:hover {
+        opacity: 0.9;
+      }
+    }
+  }
+
+  &__header {
+    background: $color-bg-secondary;
+    border: $border-default;
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  &__title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+  }
+
+  &__name {
+    font-size: $text-display;
+    font-weight: $weight-bold;
+    color: $color-text-primary;
+    margin: 0;
+  }
+
+  &__external-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: $color-bg-tertiary;
+    border-radius: 6px;
+    color: $color-accent-primary;
+    text-decoration: none;
+    font-size: $text-sm;
+    font-weight: $weight-medium;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: $color-accent-primary;
+      color: $color-text-primary;
+    }
+  }
+
+  &__description {
+    font-size: $text-base;
+    color: $color-text-secondary;
+    line-height: 1.6;
+    margin: 0 0 1.5rem 0;
+  }
+
+  &__stats {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+
+  &__stat {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    color: $color-text-secondary;
+    font-size: $text-sm;
+
+    svg {
+      color: $color-text-muted;
+    }
+
+    span:first-of-type {
+      font-weight: $weight-semibold;
+      color: $color-text-primary;
+    }
+  }
+
+  &__stat-label {
+    color: $color-text-muted;
+  }
+
+  &__info {
+    background: $color-bg-secondary;
+    border: $border-default;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  &__section-title {
+    font-size: $text-lg;
+    font-weight: $weight-semibold;
+    color: $color-text-primary;
+    margin: 0 0 1rem 0;
+  }
+
+  &__info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+
+  &__info-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem;
+    background: $color-bg-tertiary;
+    border-radius: 8px;
+
+    svg {
+      color: $color-text-muted;
+      flex-shrink: 0;
+    }
+  }
+
+  &__info-label {
+    color: $color-text-muted;
+    font-size: $text-sm;
+  }
+
+  &__info-value {
+    color: $color-text-primary;
+    font-size: $text-sm;
+    font-weight: $weight-medium;
+    margin-left: auto;
+  }
+
+  &__topics {
+    margin-top: 1.5rem;
+  }
+
+  &__topics-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+  }
+
+  &__topic {
+    padding: 0.25rem 0.75rem;
+    background: rgba($color-accent-primary, 0.15);
+    color: $color-accent-primary;
+    border-radius: 12px;
+    font-size: $text-xs;
+    font-weight: $weight-medium;
+  }
+
+  &__links {
+    background: $color-bg-secondary;
+    border: $border-default;
+    border-radius: 12px;
+    padding: 1.5rem;
+  }
+
+  &__homepage-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: $color-accent-primary;
+    text-decoration: none;
+    font-size: $text-sm;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
