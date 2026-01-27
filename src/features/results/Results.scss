@@ -65,6 +65,30 @@
     margin-top: 2rem;
   }
 
+  &__repo-scroll {
+    max-height: 600px;
+    overflow-y: auto;
+    padding-right: 0.5rem;
+
+    &::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: $color-bg-secondary;
+      border-radius: 4px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: $color-bg-tertiary;
+      border-radius: 4px;
+
+      &:hover {
+        background: $color-text-muted;
+      }
+    }
+  }
+
   &__repo-header {
     display: flex;
     justify-content: space-between;
@@ -84,5 +108,30 @@
   &__repo-list {
     display: grid;
     gap: 1rem;
+  }
+
+  &__loader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 2rem;
+    color: $color-text-secondary;
+    font-size: $text-sm;
+    min-height: 80px;
+  }
+
+  &__spinner {
+    animation: spin 1s linear infinite;
+    color: $color-accent-primary;
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
   }
 }

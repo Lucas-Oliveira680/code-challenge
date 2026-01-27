@@ -84,9 +84,29 @@ export const fetchGitHubUserDetails = async (username: string): Promise<GitHubUs
   return response.json();
 };
 
-export const fetchGitHubRepos = async (username: string): Promise<GitHubRepository[]> => {
+export type RepoSortField = 'updated' | 'full_name';
+export type SortDirection = 'asc' | 'desc';
+
+export interface FetchReposOptions {
+  page?: number;
+  perPage?: number;
+  sort?: RepoSortField;
+  direction?: SortDirection;
+}
+
+export interface FetchReposResult {
+  repositories: GitHubRepository[];
+  hasMore: boolean;
+}
+
+export const fetchGitHubRepos = async (
+  username: string,
+  options: FetchReposOptions = {}
+): Promise<FetchReposResult> => {
+  const { page = 1, perPage = 10, sort = 'updated', direction = 'desc' } = options;
+
   const response = await fetch(
-    `${GITHUB_API_BASE}/users/${username}/repos?sort=updated&per_page=100`,
+    `${GITHUB_API_BASE}/users/${username}/repos?sort=${sort}&direction=${direction}&per_page=${perPage}&page=${page}`,
     { headers: getHeaders() }
   );
 
@@ -94,22 +114,26 @@ export const fetchGitHubRepos = async (username: string): Promise<GitHubReposito
     throw createAPIError(response.status, 'Failed to fetch repositories');
   }
 
-  return response.json();
+  const repositories: GitHubRepository[] = await response.json();
+  const hasMore = repositories.length === perPage;
+
+  return { repositories, hasMore };
 };
 
 export const searchGitHubUser = async (username: string): Promise<GitHubUserSearchResult> => {
-  const [user, repositories] = await Promise.all([
+  const [user, reposResult] = await Promise.all([
     fetchGitHubUserDetails(username),
-    fetchGitHubRepos(username)
+    fetchGitHubRepos(username, { page: 1, perPage: 10 })
   ]);
 
-  const totalStars = repositories.reduce((sum, repo) => sum + repo.stargazers_count, 0);
+  const totalStars = reposResult.repositories.reduce((sum, repo) => sum + repo.stargazers_count, 0);
 
   return {
     user,
-    repositories,
+    repositories: reposResult.repositories,
     totalStars,
     fetchedAt: Date.now(),
-    username
+    username,
+    hasMoreRepos: reposResult.hasMore
   };
 };

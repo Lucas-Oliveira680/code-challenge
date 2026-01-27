@@ -42,6 +42,7 @@ export interface GitHubUserSearchResult {
   totalStars: number;
   fetchedAt: number;
   username: string;
+  hasMoreRepos: boolean;
 }
 
 export interface GitHubAPIError {
