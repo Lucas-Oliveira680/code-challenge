@@ -17,8 +17,14 @@ const mockUser = {
     followers: 10,
     following: 5,
     public_repos: 3,
+    html_url: 'https://github.com/testuser',
+    location: null,
   },
-  repos: [],
+  repositories: [],
+  totalStars: 0,
+  fetchedAt: Date.now(),
+  username: 'testuser',
+  hasMoreRepos: false,
 };
 
 describe('useGitHubSearch', () => {

@@ -106,7 +106,7 @@ describe('github.service', () => {
 
   describe('searchGitHubUsers', () => {
     it('should search users successfully', async () => {
-      global.fetch = vi.fn().mockResolvedValue({
+      globalThis.fetch = vi.fn().mockResolvedValue({
         ok: true,
         json: () => Promise.resolve(mockUserSearchResponse),
       });
@@ -120,7 +120,7 @@ describe('github.service', () => {
     });
 
     it('should throw error on 403 rate limit', async () => {
-      global.fetch = vi.fn().mockResolvedValue({
+      globalThis.fetch = vi.fn().mockResolvedValue({
         ok: false,
         status: 403,
       });
@@ -131,7 +131,7 @@ describe('github.service', () => {
     });
 
     it('should throw error on 422 invalid search', async () => {
-      global.fetch = vi.fn().mockResolvedValue({
+      globalThis.fetch = vi.fn().mockResolvedValue({
         ok: false,
         status: 422,
       });
@@ -142,7 +142,7 @@ describe('github.service', () => {
 
   describe('fetchGitHubUserDetails', () => {
     it('should fetch user details successfully', async () => {
-      global.fetch = vi.fn().mockResolvedValue({
+      globalThis.fetch = vi.fn().mockResolvedValue({
         ok: true,
         json: () => Promise.resolve(mockUserDetails),
       });
@@ -154,7 +154,7 @@ describe('github.service', () => {
     });
 
     it('should throw error on 404 not found', async () => {
-      global.fetch = vi.fn().mockResolvedValue({
+      globalThis.fetch = vi.fn().mockResolvedValue({
         ok: false,
         status: 404,
       });
@@ -165,7 +165,7 @@ describe('github.service', () => {
     });
 
     it('should throw error on 403 rate limit', async () => {
-      global.fetch = vi.fn().mockResolvedValue({
+      globalThis.fetch = vi.fn().mockResolvedValue({
         ok: false,
         status: 403,
       });
@@ -178,7 +178,7 @@ describe('github.service', () => {
 
   describe('fetchGitHubRepos', () => {
     it('should fetch repos successfully', async () => {
-      global.fetch = vi.fn().mockResolvedValue({
+      globalThis.fetch = vi.fn().mockResolvedValue({
         ok: true,
         json: () => Promise.resolve(mockRepos),
       });
@@ -194,7 +194,7 @@ describe('github.service', () => {
         .fill(null)
         .map((_, i) => ({ ...mockRepos[0], id: i, name: `repo${i}` }));
 
-      global.fetch = vi.fn().mockResolvedValue({
+      globalThis.fetch = vi.fn().mockResolvedValue({
         ok: true,
         json: () => Promise.resolve(tenRepos),
       });
@@ -205,7 +205,7 @@ describe('github.service', () => {
     });
 
     it('should indicate no more when repos less than perPage', async () => {
-      global.fetch = vi.fn().mockResolvedValue({
+      globalThis.fetch = vi.fn().mockResolvedValue({
         ok: true,
         json: () => Promise.resolve(mockRepos),
       });
@@ -216,7 +216,7 @@ describe('github.service', () => {
     });
 
     it('should use pagination options', async () => {
-      global.fetch = vi.fn().mockResolvedValue({
+      globalThis.fetch = vi.fn().mockResolvedValue({
         ok: true,
         json: () => Promise.resolve(mockRepos),
       });
@@ -228,19 +228,19 @@ describe('github.service', () => {
         direction: 'asc',
       });
 
-      expect(global.fetch).toHaveBeenCalledWith(
+      expect(globalThis.fetch).toHaveBeenCalledWith(
         expect.stringContaining('page=2'),
         expect.any(Object)
       );
-      expect(global.fetch).toHaveBeenCalledWith(
+      expect(globalThis.fetch).toHaveBeenCalledWith(
         expect.stringContaining('per_page=5'),
         expect.any(Object)
       );
-      expect(global.fetch).toHaveBeenCalledWith(
+      expect(globalThis.fetch).toHaveBeenCalledWith(
         expect.stringContaining('sort=full_name'),
         expect.any(Object)
       );
-      expect(global.fetch).toHaveBeenCalledWith(
+      expect(globalThis.fetch).toHaveBeenCalledWith(
         expect.stringContaining('direction=asc'),
         expect.any(Object)
       );
@@ -249,7 +249,7 @@ describe('github.service', () => {
 
   describe('searchGitHubUser', () => {
     it('should fetch user with repos and calculate total stars', async () => {
-      global.fetch = vi
+      globalThis.fetch = vi
         .fn()
         .mockResolvedValueOnce({
           ok: true,
@@ -271,7 +271,7 @@ describe('github.service', () => {
 
   describe('fetchRepositoryDetails', () => {
     it('should fetch repository details successfully', async () => {
-      global.fetch = vi.fn().mockResolvedValue({
+      globalThis.fetch = vi.fn().mockResolvedValue({
         ok: true,
         json: () => Promise.resolve(mockRepoDetails),
       });
@@ -284,7 +284,7 @@ describe('github.service', () => {
     });
 
     it('should throw error on 404 not found', async () => {
-      global.fetch = vi.fn().mockResolvedValue({
+      globalThis.fetch = vi.fn().mockResolvedValue({
         ok: false,
         status: 404,
       });
@@ -295,7 +295,7 @@ describe('github.service', () => {
     });
 
     it('should throw error on 403 rate limit', async () => {
-      global.fetch = vi.fn().mockResolvedValue({
+      globalThis.fetch = vi.fn().mockResolvedValue({
         ok: false,
         status: 403,
       });
