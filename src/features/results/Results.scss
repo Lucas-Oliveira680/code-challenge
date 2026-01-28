@@ -5,6 +5,14 @@
   margin: 0 auto;
   padding: 2rem;
 
+  @include md {
+    padding: 1.5rem;
+  }
+
+  @include sm {
+    padding: 1rem;
+  }
+
   &__back {
     display: inline-flex;
     align-items: center;
@@ -26,6 +34,10 @@
     svg {
       flex-shrink: 0;
     }
+
+    @include sm {
+      margin-bottom: 1rem;
+    }
   }
 
   &__loading {
@@ -33,6 +45,11 @@
     padding: 4rem 0;
     font-size: $text-lg;
     color: $color-text-secondary;
+
+    @include sm {
+      padding: 2rem 0;
+      font-size: $text-base;
+    }
   }
 
   &__error {
@@ -42,6 +59,10 @@
     border: 1px solid $color-status-error;
     border-radius: 8px;
     color: $color-status-error;
+
+    @include sm {
+      padding: 1.5rem 1rem;
+    }
 
     button {
       margin-top: 1rem;
@@ -58,17 +79,36 @@
       &:hover {
         opacity: 0.9;
       }
+
+      @include sm {
+        width: 100%;
+        padding: 0.625rem 1rem;
+        font-size: $text-sm;
+      }
     }
   }
 
   &__repositories {
     margin-top: 2rem;
+
+    @include sm {
+      margin-top: 1.5rem;
+    }
   }
 
   &__repo-scroll {
     max-height: 600px;
     overflow-y: auto;
     padding-right: 0.5rem;
+
+    @include md {
+      max-height: 500px;
+    }
+
+    @include sm {
+      max-height: none;
+      padding-right: 0;
+    }
 
     &::-webkit-scrollbar {
       width: 8px;
@@ -96,6 +136,11 @@
     margin-bottom: 1.5rem;
     flex-wrap: wrap;
     gap: 1rem;
+
+    @include sm {
+      margin-bottom: 1rem;
+      gap: 0.75rem;
+    }
   }
 
   &__repo-title {
@@ -103,11 +148,23 @@
     font-weight: $weight-semibold;
     color: $color-text-primary;
     margin: 0;
+
+    @include sm {
+      font-size: $text-lg;
+    }
+
+    @include xs {
+      font-size: $text-base;
+    }
   }
 
   &__repo-list {
     display: grid;
     gap: 1rem;
+
+    @include sm {
+      gap: 0.75rem;
+    }
   }
 
   &__loader {
@@ -119,6 +176,11 @@
     color: $color-text-secondary;
     font-size: $text-sm;
     min-height: 80px;
+
+    @include sm {
+      padding: 1.5rem;
+      min-height: 60px;
+    }
   }
 
   &__spinner {

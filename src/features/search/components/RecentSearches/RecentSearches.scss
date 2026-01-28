@@ -4,17 +4,34 @@
   max-width: 900px;
   margin: 2rem auto 0;
 
+  @include sm {
+    margin-top: 1.5rem;
+  }
+
   &__title {
     font-size: $text-lg;
     font-weight: $weight-semibold;
     color: $color-text-primary;
     margin: 0 0 1rem;
+
+    @include sm {
+      font-size: $text-base;
+    }
   }
 
   &__grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 1rem;
+
+    @include md {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include sm {
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+    }
   }
 
   &__card {
@@ -33,6 +50,10 @@
       background: $color-bg-tertiary;
       border-color: $color-accent-primary;
     }
+
+    @include sm {
+      padding: 0.625rem;
+    }
   }
 
   &__avatar {
@@ -40,6 +61,11 @@
     height: 40px;
     border-radius: 50%;
     flex-shrink: 0;
+
+    @include xs {
+      width: 32px;
+      height: 32px;
+    }
   }
 
   &__info {
@@ -55,6 +81,10 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+
+    @include sm {
+      font-size: $text-sm;
+    }
   }
 
   &__fullname {
@@ -63,5 +93,9 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+
+    @include sm {
+      font-size: $text-xs;
+    }
   }
 }

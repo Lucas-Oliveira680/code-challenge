@@ -40,7 +40,7 @@ export const Search = () => {
     };
 
     return (
-        <div style={{ padding: '2rem' }} className="search-page">
+        <div className="search-page">
             <SearchBar
                 onSearch={handleSearch}
                 onValidationError={() => setHasValidationError(true)}

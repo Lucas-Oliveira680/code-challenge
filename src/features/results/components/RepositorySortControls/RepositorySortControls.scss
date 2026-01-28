@@ -35,6 +35,11 @@
     svg {
       flex-shrink: 0;
     }
+
+    @include sm {
+      padding: 0.5rem 0.75rem;
+      font-size: $text-xs;
+    }
   }
 
   &__badge {
@@ -55,6 +60,17 @@
     min-width: 280px;
     z-index: 10;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+
+    @include sm {
+      position: fixed;
+      top: auto;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      min-width: auto;
+      border-radius: 12px 12px 0 0;
+      padding: 1.25rem;
+    }
   }
 
   &__section {
@@ -100,6 +116,10 @@
       border-color: $color-accent-primary;
       color: $color-accent-primary;
     }
+
+    @include sm {
+      padding: 0.75rem;
+    }
   }
 
   &__actions {
@@ -126,6 +146,10 @@
       border-color: $color-text-primary;
       color: $color-text-primary;
     }
+
+    @include sm {
+      padding: 0.75rem;
+    }
   }
 
   &__apply-btn {
@@ -147,6 +171,10 @@
     &:disabled {
       opacity: 0.5;
       cursor: not-allowed;
+    }
+
+    @include sm {
+      padding: 0.75rem;
     }
   }
 }

@@ -24,15 +24,25 @@
       border-radius: 8px 8px 0 0;
       border-bottom-color: transparent;
     }
+
+    @include sm {
+      gap: 0.5rem;
+      padding: 0.4rem 0.5rem;
+    }
   }
 
   &__icon {
     flex-shrink: 0;
     color: $color-text-muted;
+
+    @include xs {
+      display: none;
+    }
   }
 
   &__input {
     flex: 1;
+    min-width: 0;
     background: transparent;
     border: none;
     outline: none;
@@ -49,6 +59,10 @@
       opacity: 0.6;
       cursor: not-allowed;
     }
+
+    @include sm {
+      font-size: $text-sm;
+    }
   }
 
   &__submit-button {
@@ -62,6 +76,7 @@
     color: white;
     cursor: pointer;
     transition: background 0.2s;
+    flex-shrink: 0;
 
     &:hover:not(:disabled) {
       background: $color-accent-muted;
@@ -70,6 +85,10 @@
     &:disabled {
       opacity: 0.5;
       cursor: not-allowed;
+    }
+
+    @include sm {
+      padding: 0.5rem 0.75rem;
     }
   }
 
@@ -87,6 +106,10 @@
     color: $color-status-error;
     font-size: $text-sm;
     padding-left: 2.25rem;
+
+    @include xs {
+      padding-left: 0;
+    }
   }
 }
 

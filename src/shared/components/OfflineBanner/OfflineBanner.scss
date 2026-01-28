@@ -11,4 +11,13 @@
   color: $color-status-error;
   font-size: $text-sm;
   font-weight: $weight-medium;
+
+  @include sm {
+    font-size: $text-xs;
+    padding: 0.4rem 0.75rem;
+  }
+
+  svg {
+    flex-shrink: 0;
+  }
 }

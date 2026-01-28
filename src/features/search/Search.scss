@@ -1,10 +1,27 @@
 @use '@shared/styles/tokens' as *;
 
+.search-page {
+  padding: 2rem 1rem;
+
+  @include sm {
+    padding: 1rem 0.75rem;
+  }
+}
 
 .user-cards {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-    max-width: 1200px;
-    margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  @include lg {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  @include sm {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
 }
