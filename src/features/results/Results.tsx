@@ -12,6 +12,10 @@ import type { SortOption } from '@features/results/types/results.types';
 import type { GitHubRepository } from '@shared/types/github.types';
 import './Results.scss';
 
+const PAGE_SIZE = 10;
+const INITIAL_PAGE = 1;
+const SCROLL_THRESHOLD = 100;
+
 export const Results = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
@@ -34,7 +38,7 @@ export const Results = () => {
     if (data?.repositories) {
       setAllRepos(data.repositories);
       setHasMore(data.hasMoreRepos);
-      setPage(1);
+      setPage(INITIAL_PAGE);
     }
   }, [data]);
 
@@ -46,7 +50,7 @@ export const Results = () => {
       const nextPage = page + 1;
       const result = await fetchGitHubRepos(username, {
         page: nextPage,
-        perPage: 10,
+        perPage: PAGE_SIZE,
         sort: apiSort,
         direction: apiDirection
       });
@@ -67,7 +71,7 @@ export const Results = () => {
 
   const handleScroll = useCallback((e: React.UIEvent<HTMLDivElement>) => {
     const { scrollTop, scrollHeight, clientHeight } = e.currentTarget;
-    const isNearBottom = scrollTop + clientHeight >= scrollHeight - 100;
+    const isNearBottom = scrollTop + clientHeight >= scrollHeight - SCROLL_THRESHOLD;
 
     if (isNearBottom && hasMore && !loadingMore) {
       loadMoreRepos();
@@ -112,14 +116,14 @@ export const Results = () => {
       setPaginationError(null);
       try {
         const result = await fetchGitHubRepos(username, {
-          page: 1,
-          perPage: 10,
+          page: INITIAL_PAGE,
+          perPage: PAGE_SIZE,
           sort: newApiSort,
           direction: newApiDirection
         });
         setAllRepos(result.repositories);
         setHasMore(result.hasMore);
-        setPage(1);
+        setPage(INITIAL_PAGE);
       } catch (err) {
         const errorMessage = isGitHubAPIError(err)
           ? err.message
