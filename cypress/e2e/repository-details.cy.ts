@@ -110,8 +110,8 @@ describe('Repository Details Feature', () => {
       cy.wait('@userDetails');
       cy.wait('@userRepos');
 
-      // Then navigate to repository details
-      cy.get('[role="list"] li').first().find('button').click();
+      // Then navigate to repository details - Repository card is an article with role="button"
+      cy.get('[role="list"] li').first().find('article[role="button"]').click();
       cy.wait('@repoDetails');
 
       // Click back button
