@@ -8,7 +8,7 @@ export const UserCard = ({ user, onClick }: UserCardProps) => {
       <div className="user-card__header">
         <img
           src={user.avatar_url}
-          alt={`${user.login}'s avatar`}
+          alt={`Avatar de ${user.login}`}
           className="user-card__avatar"
         />
         <div className="user-card__info">
@@ -20,7 +20,7 @@ export const UserCard = ({ user, onClick }: UserCardProps) => {
       <div className="user-card__footer">
         <div className="user-card__stat">
           <Star size={14} />
-          <span>Score: {user.score.toFixed(1)}</span>
+          <span>Pontuação: {user.score.toFixed(1)}</span>
         </div>
         <div className="user-card__stat">
           <Users size={14} />

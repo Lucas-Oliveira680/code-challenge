@@ -10,7 +10,7 @@ export const OfflineBanner = () => {
   return (
     <div className="offline-banner">
       <WifiOff size={16} />
-      <span>Connection Lost. Searching offline cache.</span>
+      <span>Conexão perdida. Buscando no cache offline.</span>
     </div>
   );
 };

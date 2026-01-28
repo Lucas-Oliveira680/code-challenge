@@ -12,7 +12,7 @@ export const Toast = ({ message, onClose, duration = 5000 }: ToastProps) => {
   return (
     <div className="toast">
       <span className="toast__message">{message}</span>
-      <button className="toast__close" onClick={onClose} aria-label="Close">
+      <button className="toast__close" onClick={onClose} aria-label="Fechar">
         <X size={16} />
       </button>
     </div>

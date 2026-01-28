@@ -14,7 +14,7 @@ export const SearchBar = ({ onSearch, onValidationError, isLoading = false, isEx
 
     const validation = validateSearchQuery(query);
     if (!validation.isValid) {
-      setError(validation.error || 'Invalid search query');
+      setError(validation.error || 'Consulta de busca inválida');
       onValidationError?.();
       return;
     }
@@ -41,12 +41,12 @@ export const SearchBar = ({ onSearch, onValidationError, isLoading = false, isEx
           <input
             type="text"
             className="searchbar__input"
-            placeholder="Search GitHub users (e.g., lucas, javascript developers)..."
+            placeholder="Buscar usuários do GitHub (ex: lucas, desenvolvedores javascript)..."
             value={query}
             onChange={handleInputChange}
             disabled={isLoading}
             role="searchbox"
-            aria-label="Search GitHub users"
+            aria-label="Buscar usuários do GitHub"
             aria-invalid={!!error}
             aria-describedby={error ? 'search-error' : undefined}
           />
@@ -55,7 +55,7 @@ export const SearchBar = ({ onSearch, onValidationError, isLoading = false, isEx
             type="submit"
             className="searchbar__submit-button"
             disabled={isLoading || !query.trim()}
-            aria-label="Search"
+            aria-label="Buscar"
           >
             {isLoading ? (
               <span className="searchbar__spinner" aria-hidden="true" />

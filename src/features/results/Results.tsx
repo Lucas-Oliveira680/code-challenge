@@ -29,7 +29,6 @@ export const Results = () => {
 
   const username = searchParams.get('username');
 
-  // Sync initial repos when data loads
   useEffect(() => {
     if (data?.repositories) {
       setAllRepos(data.repositories);
@@ -56,7 +55,7 @@ export const Results = () => {
     } catch (err) {
       const errorMessage = isGitHubAPIError(err)
         ? err.message
-        : 'Failed to load more repositories. Check your connection.';
+        : 'Falha ao carregar mais repositórios. Verifique sua conexão.';
       setPaginationError(errorMessage);
     } finally {
       setLoadingMore(false);
@@ -74,8 +73,6 @@ export const Results = () => {
 
   const sortedRepos = useMemo(() => {
     if (!allRepos.length) return [];
-
-    // Name sorting is handled by API, only apply stars sorting client-side
     if (!starsSort) return allRepos;
 
     const repos: GitHubRepository[] = [...allRepos];
@@ -88,15 +85,12 @@ export const Results = () => {
   }, [allRepos, starsSort]);
 
   const handleSortChange = useCallback(async (newNameSort: SortOption, newStarsSort: SortOption) => {
-    // Handle stars sort (client-side only)
     setStarsSort(newStarsSort);
 
-    // Handle name sort (API-based)
     const nameSortChanged = newNameSort !== nameSort;
     setNameSort(newNameSort);
 
     if (nameSortChanged && username) {
-      // Determine API sort parameters
       let newApiSort: RepoSortField = 'updated';
       let newApiDirection: SortDirection = 'desc';
 
@@ -111,7 +105,6 @@ export const Results = () => {
       setApiSort(newApiSort);
       setApiDirection(newApiDirection);
 
-      // Reset and refetch
       setLoadingMore(true);
       setPaginationError(null);
       try {
@@ -127,7 +120,7 @@ export const Results = () => {
       } catch (err) {
         const errorMessage = isGitHubAPIError(err)
           ? err.message
-          : 'Failed to load repositories. Check your connection.';
+          : 'Falha ao carregar repositórios. Verifique sua conexão.';
         setPaginationError(errorMessage);
       } finally {
         setLoadingMore(false);
@@ -149,7 +142,7 @@ export const Results = () => {
       try {
         await search(username);
       } catch (err) {
-        console.error('Failed to fetch user data:', err);
+        console.error('Falha ao buscar dados do usuário:', err);
       }
     };
 
@@ -163,7 +156,7 @@ export const Results = () => {
   if (loading) {
     return (
       <div className="results-page">
-        <div className="results-page__loading">Loading...</div>
+        <div className="results-page__loading">Carregando...</div>
       </div>
     );
   }
@@ -173,7 +166,7 @@ export const Results = () => {
       <div className="results-page">
         <div className="results-page__error">
           {error}
-          <button onClick={() => navigate('/')}>Back to Search</button>
+          <button onClick={() => navigate('/')}>Voltar para Busca</button>
         </div>
       </div>
     );
@@ -194,7 +187,7 @@ export const Results = () => {
 
       <button className="results-page__back" onClick={() => navigate('/')}>
         <ArrowLeft size={18} />
-        <span>Back to Search</span>
+        <span>Voltar para Busca</span>
       </button>
 
       <UserInfoCard user={data.user} totalStars={data.totalStars} />
@@ -202,7 +195,7 @@ export const Results = () => {
       <section className="results-page__repositories">
         <div className="results-page__repo-header">
           <h2 className="results-page__repo-title">
-            Repositories ({data.user.public_repos})
+            Repositórios ({data.user.public_repos})
           </h2>
           <RepositorySortControls onSortChange={handleSortChange} />
         </div>
@@ -219,7 +212,7 @@ export const Results = () => {
               {loadingMore && (
                 <>
                   <Loader2 className="results-page__spinner" size={24} />
-                  <span>Loading more repositories...</span>
+                  <span>Carregando mais repositórios...</span>
                 </>
               )}
             </div>

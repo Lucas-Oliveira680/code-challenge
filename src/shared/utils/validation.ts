@@ -5,17 +5,17 @@ export interface ValidationResult {
 
 export const validateSearchQuery = (query: string): ValidationResult => {
   if (!query || query.trim().length === 0) {
-    return { isValid: false, error: 'Search query is required' };
+    return { isValid: false, error: 'A busca é obrigatória' };
   }
 
   const trimmed = query.trim();
 
   if (trimmed.length < 2) {
-    return { isValid: false, error: 'Search query must be at least 2 characters' };
+    return { isValid: false, error: 'A busca deve ter pelo menos 2 caracteres' };
   }
 
   if (trimmed.length > 256) {
-    return { isValid: false, error: 'Search query is too long' };
+    return { isValid: false, error: 'A busca é muito longa' };
   }
 
   return { isValid: true };

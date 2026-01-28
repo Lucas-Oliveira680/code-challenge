@@ -8,7 +8,7 @@ export const UserInfoCard = ({ user }: UserInfoCardProps) => {
       <div className="user-info-card__header">
         <img
           src={user.avatar_url}
-          alt={`${user.login}'s avatar`}
+          alt={`Avatar de ${user.login}`}
           className="user-info-card__avatar"
         />
         <div className="user-info-card__main">
@@ -28,15 +28,15 @@ export const UserInfoCard = ({ user }: UserInfoCardProps) => {
       <div className="user-info-card__stats">
         <div className="user-info-card__stat">
           <Users size={16} />
-          <span>{user.followers} Followers</span>
+          <span>{user.followers} Seguidores</span>
         </div>
         <div className="user-info-card__stat">
           <Users size={16} />
-          <span>{user.following} Following</span>
+          <span>{user.following} Seguindo</span>
         </div>
         <div className="user-info-card__stat">
           <Star size={16} />
-          <span>{user.public_repos} Repositories</span>
+          <span>{user.public_repos} Repositórios</span>
         </div>
         {user.location && (
           <div className="user-info-card__stat">

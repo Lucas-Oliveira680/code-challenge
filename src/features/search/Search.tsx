@@ -26,7 +26,7 @@ export const Search = () => {
             setSuggestions(result.users);
             setHasSearched(true);
         } catch (err) {
-            const message = err instanceof Error ? err.message : 'An unexpected error occurred';
+            const message = err instanceof Error ? err.message : 'Ocorreu um erro inesperado';
             setToastMessage(message);
             setSuggestions([]);
             setHasSearched(true);

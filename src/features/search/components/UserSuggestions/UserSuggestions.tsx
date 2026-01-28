@@ -7,7 +7,7 @@ export const UserSuggestions = ({ users, onSelect, hasSearched, hasError }: User
   if (users.length === 0) {
     return (
       <div className="user-suggestions user-suggestions--empty">
-        No users found
+        Nenhum usuário encontrado
       </div>
     );
   }
@@ -22,7 +22,7 @@ export const UserSuggestions = ({ users, onSelect, hasSearched, hasError }: User
           >
             <img
               src={user.avatar_url}
-              alt={`${user.login}'s avatar`}
+              alt={`Avatar de ${user.login}`}
               className="user-suggestions__avatar"
             />
             <span className="user-suggestions__name">{user.login}</span>

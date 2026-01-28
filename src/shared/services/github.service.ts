@@ -48,12 +48,12 @@ export const searchGitHubUsers = async (query: string, perPage: number = 10): Pr
 
   if (!response.ok) {
     if (response.status === 403) {
-      throw createAPIError(403, 'GitHub API rate limit exceeded');
+      throw createAPIError(403, 'Limite de requisições da API do GitHub excedido');
     }
     if (response.status === 422) {
-      throw createAPIError(422, 'Invalid search query');
+      throw createAPIError(422, 'Busca inválida');
     }
-    throw createAPIError(response.status, 'Failed to search users');
+    throw createAPIError(response.status, 'Falha ao buscar usuários');
   }
 
   const data: GitHubSearchUsersResponse = await response.json();
@@ -74,12 +74,12 @@ export const fetchGitHubUserDetails = async (username: string): Promise<GitHubUs
 
   if (!response.ok) {
     if (response.status === 404) {
-      throw createAPIError(404, `User "${username}" not found`);
+      throw createAPIError(404, `Usuário "${username}" não encontrado`);
     }
     if (response.status === 403) {
-      throw createAPIError(403, 'GitHub API rate limit exceeded');
+      throw createAPIError(403, 'Limite de requisições da API do GitHub excedido');
     }
-    throw createAPIError(response.status, 'Failed to fetch user data');
+    throw createAPIError(response.status, 'Falha ao buscar dados do usuário');
   }
 
   return response.json();
@@ -112,7 +112,7 @@ export const fetchGitHubRepos = async (
   );
 
   if (!response.ok) {
-    throw createAPIError(response.status, 'Failed to fetch repositories');
+    throw createAPIError(response.status, 'Falha ao buscar repositórios');
   }
 
   const repositories: GitHubRepository[] = await response.json();
@@ -147,12 +147,12 @@ export const fetchRepositoryDetails = async (owner: string, repo: string): Promi
 
   if (!response.ok) {
     if (response.status === 404) {
-      throw createAPIError(404, 'Repository not found');
+      throw createAPIError(404, 'Repositório não encontrado');
     }
     if (response.status === 403) {
-      throw createAPIError(403, 'GitHub API rate limit exceeded');
+      throw createAPIError(403, 'Limite de requisições da API do GitHub excedido');
     }
-    throw createAPIError(response.status, 'Failed to fetch repository details');
+    throw createAPIError(response.status, 'Falha ao buscar detalhes do repositório');
   }
 
   return response.json();

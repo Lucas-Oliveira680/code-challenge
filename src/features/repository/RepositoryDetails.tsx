@@ -30,7 +30,7 @@ export const RepositoryDetails = () => {
       } catch (err) {
         const errorMessage = isGitHubAPIError(err)
           ? err.message
-          : 'Failed to load repository details';
+          : 'Falha ao carregar detalhes do repositório';
         setError(errorMessage);
       } finally {
         setLoading(false);
@@ -45,7 +45,7 @@ export const RepositoryDetails = () => {
   };
 
   const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
+    return new Date(dateString).toLocaleDateString('pt-BR', {
       year: 'numeric',
       month: 'short',
       day: 'numeric'
@@ -55,7 +55,7 @@ export const RepositoryDetails = () => {
   if (loading) {
     return (
       <div className="repo-details">
-        <div className="repo-details__loading">Loading repository details...</div>
+        <div className="repo-details__loading">Carregando detalhes do repositório...</div>
       </div>
     );
   }
@@ -65,7 +65,7 @@ export const RepositoryDetails = () => {
       <div className="repo-details">
         <div className="repo-details__error">
           {error}
-          <button onClick={handleBack}>Go Back</button>
+          <button onClick={handleBack}>Voltar</button>
         </div>
       </div>
     );
@@ -79,7 +79,7 @@ export const RepositoryDetails = () => {
     <div className="repo-details">
       <button className="repo-details__back" onClick={handleBack}>
         <ArrowLeft size={18} />
-        <span>Back</span>
+        <span>Voltar</span>
       </button>
 
       <header className="repo-details__header">
@@ -92,7 +92,7 @@ export const RepositoryDetails = () => {
             className="repo-details__external-link"
           >
             <ExternalLink size={18} />
-            View on GitHub
+            Ver no GitHub
           </a>
         </div>
 
@@ -103,56 +103,56 @@ export const RepositoryDetails = () => {
         <div className="repo-details__stats">
           <div className="repo-details__stat">
             <Star size={16} />
-            <span>{repository.stargazers_count.toLocaleString()}</span>
-            <span className="repo-details__stat-label">stars</span>
+            <span>{repository.stargazers_count.toLocaleString('pt-BR')}</span>
+            <span className="repo-details__stat-label">estrelas</span>
           </div>
           <div className="repo-details__stat">
             <GitFork size={16} />
-            <span>{repository.forks_count.toLocaleString()}</span>
+            <span>{repository.forks_count.toLocaleString('pt-BR')}</span>
             <span className="repo-details__stat-label">forks</span>
           </div>
           <div className="repo-details__stat">
             <Eye size={16} />
-            <span>{repository.watchers_count.toLocaleString()}</span>
-            <span className="repo-details__stat-label">watchers</span>
+            <span>{repository.watchers_count.toLocaleString('pt-BR')}</span>
+            <span className="repo-details__stat-label">observadores</span>
           </div>
         </div>
       </header>
 
       <section className="repo-details__info">
-        <h2 className="repo-details__section-title">Information</h2>
+        <h2 className="repo-details__section-title">Informações</h2>
 
         <div className="repo-details__info-grid">
           {repository.language && (
             <div className="repo-details__info-item">
               <Code size={16} />
-              <span className="repo-details__info-label">Language</span>
+              <span className="repo-details__info-label">Linguagem</span>
               <span className="repo-details__info-value">{repository.language}</span>
             </div>
           )}
 
           <div className="repo-details__info-item">
             <Calendar size={16} />
-            <span className="repo-details__info-label">Created</span>
+            <span className="repo-details__info-label">Criado em</span>
             <span className="repo-details__info-value">{formatDate(repository.created_at)}</span>
           </div>
 
           <div className="repo-details__info-item">
             <Calendar size={16} />
-            <span className="repo-details__info-label">Last updated</span>
+            <span className="repo-details__info-label">Última atualização</span>
             <span className="repo-details__info-value">{formatDate(repository.updated_at)}</span>
           </div>
 
           <div className="repo-details__info-item">
             <GitFork size={16} />
-            <span className="repo-details__info-label">Default branch</span>
+            <span className="repo-details__info-label">Branch padrão</span>
             <span className="repo-details__info-value">{repository.default_branch}</span>
           </div>
         </div>
 
         {repository.topics && repository.topics.length > 0 && (
           <div className="repo-details__topics">
-            <span className="repo-details__info-label">Topics</span>
+            <span className="repo-details__info-label">Tópicos</span>
             <div className="repo-details__topics-list">
               {repository.topics.map((topic) => (
                 <span key={topic} className="repo-details__topic">{topic}</span>

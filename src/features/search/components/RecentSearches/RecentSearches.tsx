@@ -6,7 +6,7 @@ export const RecentSearches = ({ users, onSelect }: RecentSearchesProps) => {
 
   return (
     <section className="recent-searches">
-      <h2 className="recent-searches__title">Recent Searches</h2>
+      <h2 className="recent-searches__title">Buscas Recentes</h2>
       <div className="recent-searches__grid">
         {users.map((result) => (
           <button
@@ -16,7 +16,7 @@ export const RecentSearches = ({ users, onSelect }: RecentSearchesProps) => {
           >
             <img
               src={result.user.avatar_url}
-              alt={`${result.user.login}'s avatar`}
+              alt={`Avatar de ${result.user.login}`}
               className="recent-searches__avatar"
             />
             <div className="recent-searches__info">

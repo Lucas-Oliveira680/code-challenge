@@ -43,14 +43,14 @@ export const RepositorySortControls = ({ onSortChange }: RepositorySortControlsP
         onClick={() => setIsOpen(!isOpen)}
       >
         <SlidersHorizontal size={16} />
-        <span>Sort & Filter</span>
+        <span>Ordenar</span>
         {hasActiveFilters && <span className="repo-sort-controls__badge"></span>}
       </button>
 
       {isOpen && (
         <div className="repo-sort-controls__dropdown">
           <div className="repo-sort-controls__section">
-            <span className="repo-sort-controls__label">Sort by Name</span>
+            <span className="repo-sort-controls__label">Ordenar por Nome</span>
             <div className="repo-sort-controls__options">
               <button
                 className={`repo-sort-controls__option ${nameSort === 'name-asc' ? 'repo-sort-controls__option--active' : ''}`}
@@ -68,19 +68,19 @@ export const RepositorySortControls = ({ onSortChange }: RepositorySortControlsP
           </div>
 
           <div className="repo-sort-controls__section">
-            <span className="repo-sort-controls__label">Sort by Stars</span>
+            <span className="repo-sort-controls__label">Ordenar por Estrelas</span>
             <div className="repo-sort-controls__options">
               <button
                 className={`repo-sort-controls__option ${starsSort === 'stars-asc' ? 'repo-sort-controls__option--active' : ''}`}
                 onClick={() => handleStarsSortClick('stars-asc')}
               >
-                Low → High
+                Menor → Maior
               </button>
               <button
                 className={`repo-sort-controls__option ${starsSort === 'stars-desc' ? 'repo-sort-controls__option--active' : ''}`}
                 onClick={() => handleStarsSortClick('stars-desc')}
               >
-                High → Low
+                Maior → Menor
               </button>
             </div>
           </div>
@@ -90,14 +90,14 @@ export const RepositorySortControls = ({ onSortChange }: RepositorySortControlsP
               className="repo-sort-controls__clear-btn"
               onClick={handleClear}
             >
-              Clear
+              Limpar
             </button>
             <button
               className="repo-sort-controls__apply-btn"
               onClick={handleApply}
               disabled={!hasChanges}
             >
-              Apply
+              Aplicar
             </button>
           </div>
         </div>
