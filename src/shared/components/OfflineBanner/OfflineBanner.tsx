@@ -8,9 +8,14 @@ export const OfflineBanner = () => {
   if (isOnline) return null;
 
   return (
-    <div className="offline-banner">
-      <WifiOff size={16} />
+    <aside
+      className="offline-banner"
+      role="status"
+      aria-live="polite"
+      aria-label="Aviso de conexão"
+    >
+      <WifiOff size={16} aria-hidden="true" />
       <span>Conexão perdida. Buscando no cache offline.</span>
-    </div>
+    </aside>
   );
 };

@@ -5,9 +5,14 @@ import { OfflineBanner } from './shared/components/OfflineBanner/OfflineBanner'
 export function App() {
 
   return (
-    <div className="app-routes">
-      <OfflineBanner />
-      <AppRoutes />
-    </div>
+    <>
+      <a href="#main-content" className="skip-link">
+        Pular para o conteúdo principal
+      </a>
+      <div className="app-routes">
+        <OfflineBanner />
+        <AppRoutes />
+      </div>
+    </>
   )
 }

@@ -155,20 +155,22 @@ export const Results = () => {
 
   if (loading) {
     return (
-      <div className="results-page">
-        <div className="results-page__loading">Carregando...</div>
-      </div>
+      <main className="results-page" id="main-content" aria-busy="true">
+        <div className="results-page__loading" role="status" aria-live="polite">
+          Carregando...
+        </div>
+      </main>
     );
   }
 
   if (error) {
     return (
-      <div className="results-page">
-        <div className="results-page__error">
+      <main className="results-page" id="main-content">
+        <div className="results-page__error" role="alert">
           {error}
           <button onClick={() => navigate('/')}>Voltar para Busca</button>
         </div>
-      </div>
+      </main>
     );
   }
 
@@ -177,7 +179,9 @@ export const Results = () => {
   }
 
   return (
-    <div className="results-page">
+    <main className="results-page" id="main-content">
+      <h1 className="visually-hidden">Perfil de {data.user.login} no GitHub</h1>
+
       {paginationError && (
         <Toast
           message={paginationError}
@@ -185,40 +189,51 @@ export const Results = () => {
         />
       )}
 
-      <button className="results-page__back" onClick={() => navigate('/')}>
-        <ArrowLeft size={18} />
-        <span>Voltar para Busca</span>
-      </button>
+      <nav aria-label="Navegação">
+        <button className="results-page__back" onClick={() => navigate('/')}>
+          <ArrowLeft size={18} aria-hidden="true" />
+          <span>Voltar para Busca</span>
+        </button>
+      </nav>
 
       <UserInfoCard user={data.user} totalStars={data.totalStars} />
 
-      <section className="results-page__repositories">
-        <div className="results-page__repo-header">
-          <h2 className="results-page__repo-title">
+      <section className="results-page__repositories" aria-labelledby="repos-title">
+        <header className="results-page__repo-header">
+          <h2 id="repos-title" className="results-page__repo-title">
             Repositórios ({data.user.public_repos})
           </h2>
           <RepositorySortControls onSortChange={handleSortChange} />
-        </div>
+        </header>
 
-        <div ref={scrollContainerRef} className="results-page__repo-scroll" onScroll={handleScroll}>
-          <div className="results-page__repo-list">
+        <div
+          ref={scrollContainerRef}
+          className="results-page__repo-scroll"
+          onScroll={handleScroll}
+          role="region"
+          aria-label="Lista de repositórios"
+          tabIndex={0}
+        >
+          <ul className="results-page__repo-list" role="list">
             {sortedRepos.map((repo) => (
-              <RepositoryCard key={repo.id} repository={repo} />
+              <li key={repo.id}>
+                <RepositoryCard repository={repo} />
+              </li>
             ))}
-          </div>
+          </ul>
 
           {hasMore && (
-            <div ref={loaderRef} className="results-page__loader">
+            <div ref={loaderRef} className="results-page__loader" aria-hidden={!loadingMore}>
               {loadingMore && (
-                <>
-                  <Loader2 className="results-page__spinner" size={24} />
+                <div role="status" aria-live="polite">
+                  <Loader2 className="results-page__spinner" size={24} aria-hidden="true" />
                   <span>Carregando mais repositórios...</span>
-                </>
+                </div>
               )}
             </div>
           )}
         </div>
       </section>
-    </div>
+    </main>
   );
 };

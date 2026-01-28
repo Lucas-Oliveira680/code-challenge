@@ -54,20 +54,22 @@ export const RepositoryDetails = () => {
 
   if (loading) {
     return (
-      <div className="repo-details">
-        <div className="repo-details__loading">Carregando detalhes do repositório...</div>
-      </div>
+      <main className="repo-details" id="main-content" aria-busy="true">
+        <div className="repo-details__loading" role="status" aria-live="polite">
+          Carregando detalhes do repositório...
+        </div>
+      </main>
     );
   }
 
   if (error) {
     return (
-      <div className="repo-details">
-        <div className="repo-details__error">
+      <main className="repo-details" id="main-content">
+        <div className="repo-details__error" role="alert">
           {error}
           <button onClick={handleBack}>Voltar</button>
         </div>
-      </div>
+      </main>
     );
   }
 
@@ -76,106 +78,125 @@ export const RepositoryDetails = () => {
   }
 
   return (
-    <div className="repo-details">
-      <button className="repo-details__back" onClick={handleBack}>
-        <ArrowLeft size={18} />
-        <span>Voltar</span>
-      </button>
+    <main className="repo-details" id="main-content">
+      <nav aria-label="Navegação">
+        <button className="repo-details__back" onClick={handleBack}>
+          <ArrowLeft size={18} aria-hidden="true" />
+          <span>Voltar</span>
+        </button>
+      </nav>
 
-      <header className="repo-details__header">
-        <div className="repo-details__title-row">
-          <h1 className="repo-details__name">{repository.name}</h1>
-          <a
-            href={repository.html_url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="repo-details__external-link"
-          >
-            <ExternalLink size={18} />
-            Ver no GitHub
-          </a>
-        </div>
-
-        {repository.description && (
-          <p className="repo-details__description">{repository.description}</p>
-        )}
-
-        <div className="repo-details__stats">
-          <div className="repo-details__stat">
-            <Star size={16} />
-            <span>{repository.stargazers_count.toLocaleString('pt-BR')}</span>
-            <span className="repo-details__stat-label">estrelas</span>
+      <article>
+        <header className="repo-details__header">
+          <div className="repo-details__title-row">
+            <h1 className="repo-details__name">{repository.name}</h1>
+            <a
+              href={repository.html_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="repo-details__external-link"
+              aria-label={`Ver ${repository.name} no GitHub (abre em nova aba)`}
+            >
+              <ExternalLink size={18} aria-hidden="true" />
+              Ver no GitHub
+            </a>
           </div>
-          <div className="repo-details__stat">
-            <GitFork size={16} />
-            <span>{repository.forks_count.toLocaleString('pt-BR')}</span>
-            <span className="repo-details__stat-label">forks</span>
-          </div>
-          <div className="repo-details__stat">
-            <Eye size={16} />
-            <span>{repository.watchers_count.toLocaleString('pt-BR')}</span>
-            <span className="repo-details__stat-label">observadores</span>
-          </div>
-        </div>
-      </header>
 
-      <section className="repo-details__info">
-        <h2 className="repo-details__section-title">Informações</h2>
-
-        <div className="repo-details__info-grid">
-          {repository.language && (
-            <div className="repo-details__info-item">
-              <Code size={16} />
-              <span className="repo-details__info-label">Linguagem</span>
-              <span className="repo-details__info-value">{repository.language}</span>
-            </div>
+          {repository.description && (
+            <p className="repo-details__description">{repository.description}</p>
           )}
 
-          <div className="repo-details__info-item">
-            <Calendar size={16} />
-            <span className="repo-details__info-label">Criado em</span>
-            <span className="repo-details__info-value">{formatDate(repository.created_at)}</span>
-          </div>
-
-          <div className="repo-details__info-item">
-            <Calendar size={16} />
-            <span className="repo-details__info-label">Última atualização</span>
-            <span className="repo-details__info-value">{formatDate(repository.updated_at)}</span>
-          </div>
-
-          <div className="repo-details__info-item">
-            <GitFork size={16} />
-            <span className="repo-details__info-label">Branch padrão</span>
-            <span className="repo-details__info-value">{repository.default_branch}</span>
-          </div>
-        </div>
-
-        {repository.topics && repository.topics.length > 0 && (
-          <div className="repo-details__topics">
-            <span className="repo-details__info-label">Tópicos</span>
-            <div className="repo-details__topics-list">
-              {repository.topics.map((topic) => (
-                <span key={topic} className="repo-details__topic">{topic}</span>
-              ))}
+          <dl className="repo-details__stats">
+            <div className="repo-details__stat">
+              <Star size={16} aria-hidden="true" />
+              <dt className="visually-hidden">Estrelas</dt>
+              <dd>
+                <span>{repository.stargazers_count.toLocaleString('pt-BR')}</span>
+                <span className="repo-details__stat-label">estrelas</span>
+              </dd>
             </div>
-          </div>
-        )}
-      </section>
+            <div className="repo-details__stat">
+              <GitFork size={16} aria-hidden="true" />
+              <dt className="visually-hidden">Forks</dt>
+              <dd>
+                <span>{repository.forks_count.toLocaleString('pt-BR')}</span>
+                <span className="repo-details__stat-label">forks</span>
+              </dd>
+            </div>
+            <div className="repo-details__stat">
+              <Eye size={16} aria-hidden="true" />
+              <dt className="visually-hidden">Observadores</dt>
+              <dd>
+                <span>{repository.watchers_count.toLocaleString('pt-BR')}</span>
+                <span className="repo-details__stat-label">observadores</span>
+              </dd>
+            </div>
+          </dl>
+        </header>
 
-      {repository.homepage && (
-        <section className="repo-details__links">
-          <h2 className="repo-details__section-title">Links</h2>
-          <a
-            href={repository.homepage}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="repo-details__homepage-link"
-          >
-            <ExternalLink size={14} />
-            {repository.homepage}
-          </a>
+        <section className="repo-details__info" aria-labelledby="info-title">
+          <h2 id="info-title" className="repo-details__section-title">Informações</h2>
+
+          <dl className="repo-details__info-grid">
+            {repository.language && (
+              <div className="repo-details__info-item">
+                <Code size={16} aria-hidden="true" />
+                <dt className="repo-details__info-label">Linguagem</dt>
+                <dd className="repo-details__info-value">{repository.language}</dd>
+              </div>
+            )}
+
+            <div className="repo-details__info-item">
+              <Calendar size={16} aria-hidden="true" />
+              <dt className="repo-details__info-label">Criado em</dt>
+              <dd className="repo-details__info-value">
+                <time dateTime={repository.created_at}>{formatDate(repository.created_at)}</time>
+              </dd>
+            </div>
+
+            <div className="repo-details__info-item">
+              <Calendar size={16} aria-hidden="true" />
+              <dt className="repo-details__info-label">Última atualização</dt>
+              <dd className="repo-details__info-value">
+                <time dateTime={repository.updated_at}>{formatDate(repository.updated_at)}</time>
+              </dd>
+            </div>
+
+            <div className="repo-details__info-item">
+              <GitFork size={16} aria-hidden="true" />
+              <dt className="repo-details__info-label">Branch padrão</dt>
+              <dd className="repo-details__info-value">{repository.default_branch}</dd>
+            </div>
+          </dl>
+
+          {repository.topics && repository.topics.length > 0 && (
+            <div className="repo-details__topics">
+              <h3 className="repo-details__info-label" id="topics-label">Tópicos</h3>
+              <ul className="repo-details__topics-list" aria-labelledby="topics-label" role="list">
+                {repository.topics.map((topic) => (
+                  <li key={topic} className="repo-details__topic">{topic}</li>
+                ))}
+              </ul>
+            </div>
+          )}
         </section>
-      )}
-    </div>
+
+        {repository.homepage && (
+          <section className="repo-details__links" aria-labelledby="links-title">
+            <h2 id="links-title" className="repo-details__section-title">Links</h2>
+            <a
+              href={repository.homepage}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="repo-details__homepage-link"
+              aria-label={`Visitar página do projeto (abre em nova aba)`}
+            >
+              <ExternalLink size={14} aria-hidden="true" />
+              {repository.homepage}
+            </a>
+          </section>
+        )}
+      </article>
+    </main>
   );
 };

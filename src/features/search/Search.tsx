@@ -39,14 +39,32 @@ export const Search = () => {
         navigate(`/results?username=${encodeURIComponent(username)}`);
     };
 
+    const getStatusMessage = () => {
+        if (loading) return 'Buscando usuários...';
+        if (hasSearched && suggestions.length === 0) return 'Nenhum usuário encontrado';
+        if (hasSearched && suggestions.length > 0) return `${suggestions.length} usuários encontrados`;
+        return '';
+    };
+
     return (
-        <div className="search-page">
+        <main className="search-page" id="main-content">
+            <h1 className="visually-hidden">Busca de Usuários do GitHub</h1>
+
             <SearchBar
                 onSearch={handleSearch}
                 onValidationError={() => setHasValidationError(true)}
                 isLoading={loading}
                 isExpanded={hasSearched}
             />
+
+            <div
+                role="status"
+                aria-live="polite"
+                aria-atomic="true"
+                className="visually-hidden"
+            >
+                {getStatusMessage()}
+            </div>
 
             <UserSuggestions
                 users={suggestions}
@@ -68,6 +86,6 @@ export const Search = () => {
                     onClose={() => setToastMessage(null)}
                 />
             )}
-        </div>
+        </main>
     );
 }
