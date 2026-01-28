@@ -30,7 +30,6 @@ export const Results = () => {
   const [apiSort, setApiSort] = useState<RepoSortField>('updated');
   const [apiDirection, setApiDirection] = useState<SortDirection>('desc');
   const loaderRef = useRef<HTMLDivElement>(null);
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const username = searchParams.get('username');
 
@@ -69,13 +68,29 @@ export const Results = () => {
     }
   }, [username, page, loadingMore, hasMore, paginationError, apiSort, apiDirection, allRepos]);
 
-  const handleScroll = useCallback((e: React.UIEvent<HTMLDivElement>) => {
-    const { scrollTop, scrollHeight, clientHeight } = e.currentTarget;
-    const isNearBottom = scrollTop + clientHeight >= scrollHeight - SCROLL_THRESHOLD;
+  useEffect(() => {
+    const loader = loaderRef.current;
+    if (!loader || !hasMore) return;
 
-    if (isNearBottom && hasMore && !loadingMore) {
-      loadMoreRepos();
-    }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const [entry] = entries;
+        if (entry.isIntersecting && hasMore && !loadingMore) {
+          loadMoreRepos();
+        }
+      },
+      {
+        root: null,
+        rootMargin: `${SCROLL_THRESHOLD}px`,
+        threshold: 0,
+      }
+    );
+
+    observer.observe(loader);
+
+    return () => {
+      observer.disconnect();
+    };
   }, [hasMore, loadingMore, loadMoreRepos]);
 
   const sortedRepos = useMemo(() => {
@@ -214,9 +229,7 @@ export const Results = () => {
         </header>
 
         <div
-          ref={scrollContainerRef}
           className="results-page__repo-scroll"
-          onScroll={handleScroll}
           role="region"
           aria-label="Lista de repositórios"
           tabIndex={0}
