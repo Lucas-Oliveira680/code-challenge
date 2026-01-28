@@ -1,12 +1,13 @@
 import { render, screen } from '@testing-library/react';
+import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { OfflineBanner } from './OfflineBanner';
 import * as useOnlineStatusModule from '../../hooks/useOnlineStatus';
 
 vi.mock('../../hooks/useOnlineStatus');
 
 describe('OfflineBanner', () => {
-  afterEach(() => {
-    vi.resetAllMocks();
+  beforeEach(() => {
+    vi.clearAllMocks();
   });
 
   it('should not render when online', () => {
@@ -22,10 +23,10 @@ describe('OfflineBanner', () => {
 
     render(<OfflineBanner />);
 
-    expect(screen.getByText(/conexão perdida/i)).toBeInTheDocument();
+    expect(screen.getByRole('status')).toBeInTheDocument();
   });
 
-  it('should have correct accessibility attributes', () => {
+  it('should have proper accessibility attributes', () => {
     vi.mocked(useOnlineStatusModule.useOnlineStatus).mockReturnValue(false);
 
     render(<OfflineBanner />);
@@ -40,6 +41,6 @@ describe('OfflineBanner', () => {
 
     render(<OfflineBanner />);
 
-    expect(screen.getByText(/buscando no cache offline/i)).toBeInTheDocument();
+    expect(screen.getByText(/conexão perdida/i)).toBeInTheDocument();
   });
 });

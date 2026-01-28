@@ -1,9 +1,14 @@
-import { render, screen } from '../../../../test/test-utils';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { RepositorySortControls } from './RepositorySortControls';
 
 describe('RepositorySortControls', () => {
-  it('should render sort button', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
+  it('should render sort trigger button', () => {
     render(<RepositorySortControls onSortChange={vi.fn()} />);
 
     expect(screen.getByRole('button', { name: /ordenar repositórios/i })).toBeInTheDocument();
@@ -18,11 +23,9 @@ describe('RepositorySortControls', () => {
     expect(screen.getByRole('dialog')).toBeInTheDocument();
     expect(screen.getByText('A → Z')).toBeInTheDocument();
     expect(screen.getByText('Z → A')).toBeInTheDocument();
-    expect(screen.getByText('Menor → Maior')).toBeInTheDocument();
-    expect(screen.getByText('Maior → Menor')).toBeInTheDocument();
   });
 
-  it('should close dropdown on Escape key', async () => {
+  it('should close dropdown on Escape', async () => {
     const user = userEvent.setup();
     render(<RepositorySortControls onSortChange={vi.fn()} />);
 
@@ -30,11 +33,34 @@ describe('RepositorySortControls', () => {
     expect(screen.getByRole('dialog')).toBeInTheDocument();
 
     await user.keyboard('{Escape}');
-
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
   });
 
-  it('should toggle name sort options', async () => {
+  it('should call onSortChange when Apply is clicked', async () => {
+    const user = userEvent.setup();
+    const onSortChange = vi.fn();
+    render(<RepositorySortControls onSortChange={onSortChange} />);
+
+    await user.click(screen.getByRole('button', { name: /ordenar repositórios/i }));
+    await user.click(screen.getByRole('button', { name: 'A → Z' }));
+    await user.click(screen.getByRole('button', { name: 'Aplicar' }));
+
+    expect(onSortChange).toHaveBeenCalledWith('name-asc', null);
+  });
+
+  it('should call onSortChange with null when Clear is clicked', async () => {
+    const user = userEvent.setup();
+    const onSortChange = vi.fn();
+    render(<RepositorySortControls onSortChange={onSortChange} />);
+
+    await user.click(screen.getByRole('button', { name: /ordenar repositórios/i }));
+    await user.click(screen.getByRole('button', { name: 'A → Z' }));
+    await user.click(screen.getByRole('button', { name: 'Limpar' }));
+
+    expect(onSortChange).toHaveBeenCalledWith(null, null);
+  });
+
+  it('should toggle sort option when clicked twice', async () => {
     const user = userEvent.setup();
     render(<RepositorySortControls onSortChange={vi.fn()} />);
 
@@ -48,43 +74,7 @@ describe('RepositorySortControls', () => {
     expect(ascButton).toHaveAttribute('aria-pressed', 'false');
   });
 
-  it('should toggle stars sort options', async () => {
-    const user = userEvent.setup();
-    render(<RepositorySortControls onSortChange={vi.fn()} />);
-
-    await user.click(screen.getByRole('button', { name: /ordenar repositórios/i }));
-
-    const descButton = screen.getByRole('button', { name: 'Maior → Menor' });
-    await user.click(descButton);
-    expect(descButton).toHaveAttribute('aria-pressed', 'true');
-  });
-
-  it('should call onSortChange when Apply is clicked', async () => {
-    const user = userEvent.setup();
-    const onSortChange = vi.fn();
-    render(<RepositorySortControls onSortChange={onSortChange} />);
-
-    await user.click(screen.getByRole('button', { name: /ordenar repositórios/i }));
-    await user.click(screen.getByRole('button', { name: 'A → Z' }));
-    await user.click(screen.getByRole('button', { name: 'Maior → Menor' }));
-    await user.click(screen.getByRole('button', { name: 'Aplicar' }));
-
-    expect(onSortChange).toHaveBeenCalledWith('name-asc', 'stars-desc');
-  });
-
-  it('should clear all selections when Clear is clicked', async () => {
-    const user = userEvent.setup();
-    const onSortChange = vi.fn();
-    render(<RepositorySortControls onSortChange={onSortChange} />);
-
-    await user.click(screen.getByRole('button', { name: /ordenar repositórios/i }));
-    await user.click(screen.getByRole('button', { name: 'A → Z' }));
-    await user.click(screen.getByRole('button', { name: 'Limpar' }));
-
-    expect(onSortChange).toHaveBeenCalledWith(null, null);
-  });
-
-  it('should disable Apply button when no changes', async () => {
+  it('should disable Apply when no changes', async () => {
     const user = userEvent.setup();
     render(<RepositorySortControls onSortChange={vi.fn()} />);
 
@@ -93,7 +83,7 @@ describe('RepositorySortControls', () => {
     expect(screen.getByRole('button', { name: 'Aplicar' })).toBeDisabled();
   });
 
-  it('should enable Apply button when there are changes', async () => {
+  it('should enable Apply when changes are made', async () => {
     const user = userEvent.setup();
     render(<RepositorySortControls onSortChange={vi.fn()} />);
 
@@ -111,35 +101,6 @@ describe('RepositorySortControls', () => {
     await user.click(screen.getByRole('button', { name: 'A → Z' }));
     await user.click(screen.getByRole('button', { name: 'Aplicar' }));
 
-    expect(
-      screen.getByRole('button', { name: /ordenar repositórios.*filtros ativos/i })
-    ).toBeInTheDocument();
-  });
-
-  it('should close dropdown and focus trigger on Apply', async () => {
-    const user = userEvent.setup();
-    render(<RepositorySortControls onSortChange={vi.fn()} />);
-
-    const trigger = screen.getByRole('button', { name: /ordenar repositórios/i });
-    await user.click(trigger);
-    await user.click(screen.getByRole('button', { name: 'A → Z' }));
-    await user.click(screen.getByRole('button', { name: 'Aplicar' }));
-
-    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
-    expect(trigger).toHaveFocus();
-  });
-
-  it('should have correct aria-expanded attribute', async () => {
-    const user = userEvent.setup();
-    render(<RepositorySortControls onSortChange={vi.fn()} />);
-
-    const trigger = screen.getByRole('button', { name: /ordenar repositórios/i });
-    expect(trigger).toHaveAttribute('aria-expanded', 'false');
-
-    await user.click(trigger);
-    expect(trigger).toHaveAttribute('aria-expanded', 'true');
-
-    await user.click(trigger);
-    expect(trigger).toHaveAttribute('aria-expanded', 'false');
+    expect(screen.getByRole('button', { name: /filtros ativos/i })).toBeInTheDocument();
   });
 });

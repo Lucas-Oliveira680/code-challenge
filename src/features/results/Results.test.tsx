@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '../../test/test-utils';
+import { render, screen } from '../../test/test-utils';
 import userEvent from '@testing-library/user-event';
 import { Results } from './Results';
 import * as useGitHubSearchModule from '@shared/hooks/useGitHubSearch';

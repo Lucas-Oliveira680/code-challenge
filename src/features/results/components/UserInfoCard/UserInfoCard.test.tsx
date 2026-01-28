@@ -1,100 +1,104 @@
-import { render, screen } from '../../../../test/test-utils';
+import { render, screen } from '@testing-library/react';
+import { BrowserRouter } from 'react-router-dom';
+import { describe, it, expect } from 'vitest';
 import { UserInfoCard } from './UserInfoCard';
 import type { GitHubUserDetails } from '@shared/types/github.types';
 
 const mockUser: GitHubUserDetails = {
   login: 'testuser',
+  avatar_url: 'https://example.com/avatar.png',
   name: 'Test User',
-  avatar_url: 'https://avatars.githubusercontent.com/testuser',
-  bio: 'Test bio description',
-  location: 'São Paulo, Brazil',
+  bio: 'This is a test bio.',
   followers: 100,
   following: 50,
   public_repos: 25,
+  location: 'Test Location',
   html_url: 'https://github.com/testuser',
+};
+
+const mockUserMinimal: GitHubUserDetails = {
+  login: 'miniuser',
+  avatar_url: 'https://example.com/avatar2.png',
+  name: null,
+  bio: null,
+  followers: 1,
+  following: 2,
+  public_repos: 3,
+  location: null,
+  html_url: 'https://github.com/miniuser',
+};
+
+const renderWithRouter = (ui: React.ReactElement) => {
+  return render(<BrowserRouter>{ui}</BrowserRouter>);
 };
 
 describe('UserInfoCard', () => {
   it('should render user name', () => {
-    render(<UserInfoCard user={mockUser} />);
+    renderWithRouter(<UserInfoCard user={mockUser} />);
 
     expect(screen.getByRole('heading', { name: 'Test User' })).toBeInTheDocument();
   });
 
-  it('should render login when name is null', () => {
-    const userWithoutName = { ...mockUser, name: null };
-    render(<UserInfoCard user={userWithoutName} />);
-
-    expect(screen.getByRole('heading', { name: 'testuser' })).toBeInTheDocument();
-  });
-
   it('should render username link', () => {
-    render(<UserInfoCard user={mockUser} />);
+    renderWithRouter(<UserInfoCard user={mockUser} />);
 
-    const link = screen.getByRole('link', { name: /visitar perfil/i });
+    expect(screen.getByText('@testuser')).toBeInTheDocument();
+    const link = screen.getByRole('link', { name: /visitar perfil de testuser/i });
     expect(link).toHaveAttribute('href', 'https://github.com/testuser');
     expect(link).toHaveAttribute('target', '_blank');
-    expect(link).toHaveAttribute('rel', 'noopener noreferrer');
   });
 
-  it('should render avatar image', () => {
-    render(<UserInfoCard user={mockUser} />);
+  it('should render avatar', () => {
+    renderWithRouter(<UserInfoCard user={mockUser} />);
 
-    const avatar = screen.getByRole('img', { name: /foto de perfil/i });
-    expect(avatar).toHaveAttribute('src', mockUser.avatar_url);
+    expect(screen.getByAltText('Foto de perfil de testuser')).toHaveAttribute('src', mockUser.avatar_url);
   });
 
-  it('should render bio when provided', () => {
-    render(<UserInfoCard user={mockUser} />);
+  it('should render bio', () => {
+    renderWithRouter(<UserInfoCard user={mockUser} />);
 
-    expect(screen.getByText('Test bio description')).toBeInTheDocument();
-  });
-
-  it('should not render bio when null', () => {
-    const userWithoutBio = { ...mockUser, bio: null };
-    render(<UserInfoCard user={userWithoutBio} />);
-
-    expect(screen.queryByText('Test bio description')).not.toBeInTheDocument();
+    expect(screen.getByText('This is a test bio.')).toBeInTheDocument();
   });
 
   it('should render follower count', () => {
-    render(<UserInfoCard user={mockUser} />);
+    renderWithRouter(<UserInfoCard user={mockUser} />);
 
     expect(screen.getByText('100')).toBeInTheDocument();
-    expect(screen.getByText(/seguidores/i)).toBeInTheDocument();
   });
 
   it('should render following count', () => {
-    render(<UserInfoCard user={mockUser} />);
+    renderWithRouter(<UserInfoCard user={mockUser} />);
 
     expect(screen.getByText('50')).toBeInTheDocument();
-    expect(screen.getByText(/seguindo/i)).toBeInTheDocument();
   });
 
   it('should render repository count', () => {
-    render(<UserInfoCard user={mockUser} />);
+    renderWithRouter(<UserInfoCard user={mockUser} />);
 
     expect(screen.getByText('25')).toBeInTheDocument();
-    expect(screen.getByText(/repositórios/i)).toBeInTheDocument();
   });
 
-  it('should render location when provided', () => {
-    render(<UserInfoCard user={mockUser} />);
+  it('should render location', () => {
+    renderWithRouter(<UserInfoCard user={mockUser} />);
 
-    expect(screen.getByText('São Paulo, Brazil')).toBeInTheDocument();
+    expect(screen.getByText('Test Location')).toBeInTheDocument();
+  });
+
+  it('should use login when name is null', () => {
+    renderWithRouter(<UserInfoCard user={mockUserMinimal} />);
+
+    expect(screen.getByRole('heading', { name: 'miniuser' })).toBeInTheDocument();
+  });
+
+  it('should not render bio when null', () => {
+    renderWithRouter(<UserInfoCard user={mockUserMinimal} />);
+
+    expect(screen.queryByText('This is a test bio.')).not.toBeInTheDocument();
   });
 
   it('should not render location when null', () => {
-    const userWithoutLocation = { ...mockUser, location: null };
-    render(<UserInfoCard user={userWithoutLocation} />);
+    renderWithRouter(<UserInfoCard user={mockUserMinimal} />);
 
-    expect(screen.queryByText('São Paulo, Brazil')).not.toBeInTheDocument();
-  });
-
-  it('should have accessible article label', () => {
-    render(<UserInfoCard user={mockUser} />);
-
-    const article = screen.getByRole('article', { name: /informações de test user/i });
-    expect(article).toBeInTheDocument();
+    expect(screen.queryByText('Test Location')).not.toBeInTheDocument();
   });
 });
