@@ -38,8 +38,8 @@ describe('SearchBar Component', () => {
 
   it('calls onSearch with trimmed query when validation passes', async () => {
     const user = userEvent.setup();
-    (validateSearchQuery as any).mockReturnValue({ isValid: true });
-    
+    vi.mocked(validateSearchQuery).mockReturnValue({ isValid: true });
+
     render(<SearchBar onSearch={mockOnSearch} />);
     
     const input = screen.getByRole('searchbox');
@@ -56,9 +56,9 @@ describe('SearchBar Component', () => {
   it('shows error message and calls onValidationError when validation fails', async () => {
     const user = userEvent.setup();
     const errorMessage = 'Nome muito curto';
-    (validateSearchQuery as any).mockReturnValue({ 
-      isValid: false, 
-      error: errorMessage 
+    vi.mocked(validateSearchQuery).mockReturnValue({
+      isValid: false,
+      error: errorMessage,
     });
 
     render(<SearchBar onSearch={mockOnSearch} onValidationError={mockOnValidationError} />);
@@ -75,7 +75,7 @@ describe('SearchBar Component', () => {
 
   it('clears error when user starts typing again', async () => {
     const user = userEvent.setup();
-    (validateSearchQuery as any).mockReturnValue({ isValid: false, error: 'Error' });
+    vi.mocked(validateSearchQuery).mockReturnValue({ isValid: false, error: 'Error' });
 
     render(<SearchBar onSearch={mockOnSearch} />);
     

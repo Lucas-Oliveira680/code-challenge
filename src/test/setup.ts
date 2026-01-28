@@ -5,7 +5,9 @@ class IntersectionObserverMock {
   readonly rootMargin: string = '';
   readonly thresholds: ReadonlyArray<number> = [];
 
-  constructor(private callback: IntersectionObserverCallback) {}
+  constructor(_callback: IntersectionObserverCallback) {
+    // callback stored for potential future use
+  }
 
   observe() {}
   unobserve() {}
