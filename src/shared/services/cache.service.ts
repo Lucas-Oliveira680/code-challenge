@@ -1,16 +1,28 @@
-import type { GitHubUserSearchResult } from '../types/github.types';
+import type { GitHubUserSearchResult, GitHubRepositoryDetails, GitHubRepository } from '../types/github.types';
 
 const CACHE_KEY = 'github_user_cache';
+const REPO_DETAILS_CACHE_KEY = 'github_repo_details_cache';
 const MAX_CACHED_USERS = 6;
+const MAX_CACHED_REPO_DETAILS = 20;
 
 export interface CachedUser {
   data: GitHubUserSearchResult;
   cachedAt: number;
 }
 
+export interface CachedRepoDetails {
+  data: GitHubRepositoryDetails;
+  cachedAt: number;
+}
+
 interface UserCache {
   users: Record<string, CachedUser>;
-  order: string[]; // Most recent first
+  order: string[];
+}
+
+interface RepoDetailsCache {
+  repos: Record<string, CachedRepoDetails>;
+  order: string[];
 }
 
 const getCache = (): UserCache => {
@@ -27,6 +39,22 @@ const getCache = (): UserCache => {
 
 const saveCache = (cache: UserCache): void => {
   sessionStorage.setItem(CACHE_KEY, JSON.stringify(cache));
+};
+
+const getRepoDetailsCache = (): RepoDetailsCache => {
+  try {
+    const cached = sessionStorage.getItem(REPO_DETAILS_CACHE_KEY);
+    if (cached) {
+      return JSON.parse(cached);
+    }
+  } catch {
+    // Invalid cache, reset it
+  }
+  return { repos: {}, order: [] };
+};
+
+const saveRepoDetailsCache = (cache: RepoDetailsCache): void => {
+  sessionStorage.setItem(REPO_DETAILS_CACHE_KEY, JSON.stringify(cache));
 };
 
 export const cacheUser = (data: GitHubUserSearchResult): void => {
@@ -71,4 +99,45 @@ export const getRecentUsers = (): GitHubUserSearchResult[] => {
 
 export const clearCache = (): void => {
   sessionStorage.removeItem(CACHE_KEY);
+};
+
+export const updateCachedUserRepos = (username: string, repositories: GitHubRepository[], hasMoreRepos: boolean): void => {
+  const cache = getCache();
+  const key = username.toLowerCase();
+  const cached = cache.users[key];
+
+  if (cached) {
+    cached.data.repositories = repositories;
+    cached.data.hasMoreRepos = hasMoreRepos;
+    cached.cachedAt = Date.now();
+    saveCache(cache);
+  }
+};
+
+export const cacheRepoDetails = (owner: string, repoName: string, data: GitHubRepositoryDetails): void => {
+  const cache = getRepoDetailsCache();
+  const key = `${owner.toLowerCase()}/${repoName.toLowerCase()}`;
+
+  cache.order = cache.order.filter(k => k !== key);
+  cache.order.unshift(key);
+
+  if (cache.order.length > MAX_CACHED_REPO_DETAILS) {
+    const removed = cache.order.pop();
+    if (removed) {
+      delete cache.repos[removed];
+    }
+  }
+
+  cache.repos[key] = {
+    data,
+    cachedAt: Date.now()
+  };
+
+  saveRepoDetailsCache(cache);
+};
+
+export const getCachedRepoDetails = (owner: string, repoName: string): GitHubRepositoryDetails | null => {
+  const cache = getRepoDetailsCache();
+  const key = `${owner.toLowerCase()}/${repoName.toLowerCase()}`;
+  return cache.repos[key]?.data ?? null;
 };

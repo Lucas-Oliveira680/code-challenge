@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Star, GitFork, Eye, ExternalLink, Calendar, Code } from 'lucide-react';
 import { fetchRepositoryDetails, isGitHubAPIError } from '@shared/services/github.service';
+import { getCachedRepoDetails, cacheRepoDetails } from '@shared/services/cache.service';
 import type { GitHubRepositoryDetails } from '@shared/types/github.types';
 import './RepositoryDetails.scss';
 
@@ -11,6 +12,7 @@ export const RepositoryDetails = () => {
   const [repository, setRepository] = useState<GitHubRepositoryDetails | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [fromCache, setFromCache] = useState(false);
 
   const owner = searchParams.get('owner');
   const repo = searchParams.get('repo');
@@ -24,14 +26,24 @@ export const RepositoryDetails = () => {
     const fetchData = async () => {
       setLoading(true);
       setError(null);
+      setFromCache(false);
+
+      const cached = getCachedRepoDetails(owner, repo);
+
       try {
         const data = await fetchRepositoryDetails(owner, repo);
         setRepository(data);
+        cacheRepoDetails(owner, repo, data);
       } catch (err) {
-        const errorMessage = isGitHubAPIError(err)
-          ? err.message
-          : 'Falha ao carregar detalhes do repositório';
-        setError(errorMessage);
+        if (cached) {
+          setRepository(cached);
+          setFromCache(true);
+        } else {
+          const errorMessage = isGitHubAPIError(err)
+            ? err.message
+            : 'Falha ao carregar detalhes do repositório';
+          setError(errorMessage);
+        }
       } finally {
         setLoading(false);
       }
@@ -65,9 +77,15 @@ export const RepositoryDetails = () => {
   if (error) {
     return (
       <main className="repo-details" id="main-content">
+        <nav aria-label="Navegação">
+          <button className="repo-details__back" onClick={handleBack}>
+            <ArrowLeft size={18} aria-hidden="true" />
+            <span>Voltar</span>
+          </button>
+        </nav>
+
         <div className="repo-details__error" role="alert">
           {error}
-          <button onClick={handleBack}>Voltar</button>
         </div>
       </main>
     );
@@ -85,6 +103,12 @@ export const RepositoryDetails = () => {
           <span>Voltar</span>
         </button>
       </nav>
+
+      {fromCache && (
+        <div className="repo-details__cache-notice" role="status">
+          Exibindo dados do cache (offline)
+        </div>
+      )}
 
       <article>
         <header className="repo-details__header">

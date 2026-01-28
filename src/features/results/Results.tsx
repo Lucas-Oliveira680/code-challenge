@@ -3,6 +3,7 @@ import { useSearchParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Loader2 } from 'lucide-react';
 import { useGitHubSearch } from '@shared/hooks/useGitHubSearch';
 import { fetchGitHubRepos, isGitHubAPIError, type RepoSortField, type SortDirection } from '@shared/services/github.service';
+import { updateCachedUserRepos } from '@shared/services/cache.service';
 import { Toast } from '@shared/components/Toast/Toast';
 import { UserInfoCard } from './components/UserInfoCard/UserInfoCard';
 import { RepositoryCard } from './components/RepositoryCard/RepositoryCard';
@@ -49,9 +50,11 @@ export const Results = () => {
         sort: apiSort,
         direction: apiDirection
       });
-      setAllRepos(prev => [...prev, ...result.repositories]);
+      const newAllRepos = [...allRepos, ...result.repositories];
+      setAllRepos(newAllRepos);
       setHasMore(result.hasMore);
       setPage(nextPage);
+      updateCachedUserRepos(username, newAllRepos, result.hasMore);
     } catch (err) {
       const errorMessage = isGitHubAPIError(err)
         ? err.message
@@ -60,7 +63,7 @@ export const Results = () => {
     } finally {
       setLoadingMore(false);
     }
-  }, [username, page, loadingMore, hasMore, paginationError, apiSort, apiDirection]);
+  }, [username, page, loadingMore, hasMore, paginationError, apiSort, apiDirection, allRepos]);
 
   const handleScroll = useCallback((e: React.UIEvent<HTMLDivElement>) => {
     const { scrollTop, scrollHeight, clientHeight } = e.currentTarget;

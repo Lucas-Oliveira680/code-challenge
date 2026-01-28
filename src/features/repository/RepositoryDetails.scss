@@ -50,38 +50,32 @@
 
   &__error {
     text-align: center;
-    padding: 2rem;
+    padding: 1.5rem 2rem;
     background: $color-bg-secondary;
     border: 1px solid $color-status-error;
     border-radius: 8px;
+    font-size: $text-base;
     color: $color-status-error;
 
     @include sm {
-      padding: 1.5rem 1rem;
+      padding: 1rem;
+      font-size: $text-sm;
     }
+  }
 
-    button {
-      margin-top: 1rem;
-      padding: 0.75rem 1.5rem;
-      background: $color-accent-primary;
-      color: $color-text-primary;
-      border: none;
-      border-radius: 8px;
-      font-size: $text-base;
-      font-weight: $weight-medium;
-      cursor: pointer;
-      transition: all 0.2s ease;
-
-      &:hover {
-        opacity: 0.9;
-      }
-
-      @include sm {
-        width: 100%;
-        padding: 0.625rem 1rem;
-        font-size: $text-sm;
-      }
-    }
+  &__cache-notice {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    margin-bottom: 1rem;
+    background: rgba($color-status-info, 0.15);
+    border: 1px solid $color-status-info;
+    border-radius: 6px;
+    color: $color-status-info;
+    font-size: $text-sm;
+    font-weight: $weight-medium;
   }
 
   &__header {
