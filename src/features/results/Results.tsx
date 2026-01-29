@@ -30,6 +30,8 @@ export const Results = () => {
   const [apiSort, setApiSort] = useState<RepoSortField>('updated');
   const [apiDirection, setApiDirection] = useState<SortDirection>('desc');
   const loaderRef = useRef<HTMLDivElement>(null);
+  const isLoadingMoreRef = useRef(false);
+  const isFetchingRef = useRef(false);
 
   const username = searchParams.get('username');
 
@@ -42,8 +44,9 @@ export const Results = () => {
   }, [data]);
 
   const loadMoreRepos = useCallback(async () => {
-    if (!username || loadingMore || !hasMore || paginationError) return;
+    if (!username || isLoadingMoreRef.current || !hasMore || paginationError) return;
 
+    isLoadingMoreRef.current = true;
     setLoadingMore(true);
     try {
       const nextPage = page + 1;
@@ -64,9 +67,10 @@ export const Results = () => {
         : 'Falha ao carregar mais repositórios. Verifique sua conexão.';
       setPaginationError(errorMessage);
     } finally {
+      isLoadingMoreRef.current = false;
       setLoadingMore(false);
     }
-  }, [username, page, loadingMore, hasMore, paginationError, apiSort, apiDirection, allRepos]);
+  }, [username, page, hasMore, paginationError, apiSort, apiDirection, allRepos]);
 
   useEffect(() => {
     const loader = loaderRef.current;
@@ -156,15 +160,18 @@ export const Results = () => {
       return;
     }
 
-    if (loading || (data && data.username === username)) {
+    if (isFetchingRef.current || loading || (data && data.username === username)) {
       return;
     }
 
     const fetchData = async () => {
+      isFetchingRef.current = true;
       try {
         await search(username);
       } catch (err) {
         console.error('Falha ao buscar dados do usuário:', err);
+      } finally {
+        isFetchingRef.current = false;
       }
     };
 
@@ -235,8 +242,8 @@ export const Results = () => {
           tabIndex={0}
         >
           <ul className="results-page__repo-list" role="list">
-            {sortedRepos.map((repo) => (
-              <li key={repo.id}>
+            {sortedRepos.map((repo, index) => (
+              <li key={`${repo.id}-${index}`}>
                 <RepositoryCard repository={repo} />
               </li>
             ))}

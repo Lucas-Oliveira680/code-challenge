@@ -23,6 +23,9 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 1rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
 
     @include md {
       grid-template-columns: repeat(2, 1fr);

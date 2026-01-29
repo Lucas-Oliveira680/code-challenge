@@ -137,5 +137,9 @@
       color: $color-text-muted;
       flex-shrink: 0;
     }
+
+    dd {
+      margin: 0;
+    }
   }
 }

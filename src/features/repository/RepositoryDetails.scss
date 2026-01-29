@@ -198,6 +198,12 @@
       color: $color-text-muted;
     }
 
+    dd {
+      margin: 0;
+      display: flex;
+      gap: 0.25rem;
+    }
+
     span:first-of-type {
       font-weight: $weight-semibold;
       color: $color-text-primary;
