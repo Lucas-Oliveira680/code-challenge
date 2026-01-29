@@ -41,7 +41,7 @@ export const SearchBar = ({ onSearch, onValidationError, isLoading = false, isEx
           <input
             type="text"
             className="searchbar__input"
-            placeholder="Buscar usuários do GitHub (ex: lucas, desenvolvedores javascript)..."
+            placeholder="Digite um nome de usuário..."
             value={query}
             onChange={handleInputChange}
             disabled={isLoading}
