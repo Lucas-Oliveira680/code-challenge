@@ -43,7 +43,7 @@ describe('Search', () => {
   it('should render search page with heading', () => {
     render(<Search />);
 
-    expect(screen.getByRole('heading', { name: /busca de usuários do github/i })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /github explorer/i })).toBeInTheDocument();
   });
 
   it('should render searchbar', () => {

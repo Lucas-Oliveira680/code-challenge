@@ -6,6 +6,36 @@
   @include sm {
     padding: 1rem 0.75rem;
   }
+
+  &__header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+
+    @include sm {
+      margin-bottom: 1.5rem;
+    }
+  }
+
+  &__title {
+    font-size: $text-display;
+    font-weight: $weight-bold;
+    color: $color-text-primary;
+    margin: 0 0 0.5rem;
+
+    @include sm {
+      font-size: $text-2xl;
+    }
+  }
+
+  &__description {
+    font-size: $text-lg;
+    color: $color-text-secondary;
+    margin: 0;
+
+    @include sm {
+      font-size: $text-base;
+    }
+  }
 }
 
 .user-cards {

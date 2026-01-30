@@ -21,7 +21,7 @@ describe('SearchBar Component', () => {
     render(<SearchBar onSearch={mockOnSearch} />);
     
     expect(screen.getByRole('searchbox')).toBeInTheDocument();
-    expect(screen.getByPlaceholderText(/Buscar usuários do GitHub/i)).toBeInTheDocument();
+    expect(screen.getByPlaceholderText(/Digite um nome de usuário/i)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /buscar/i })).toBeDisabled();
   });
 

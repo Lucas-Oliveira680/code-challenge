@@ -48,7 +48,12 @@ export const Search = () => {
 
     return (
         <main className="search-page" id="main-content">
-            <h1 className="visually-hidden">Busca de Usuários do GitHub</h1>
+            <header className="search-page__header">
+                <h1 className="search-page__title">GitHub Explorer</h1>
+                <p className="search-page__description">
+                    Encontre usuários e explore seus repositórios
+                </p>
+            </header>
 
             <SearchBar
                 onSearch={handleSearch}
